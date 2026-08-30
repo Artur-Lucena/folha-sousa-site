@@ -1,6 +1,6 @@
 'use client';
 
-import type { FormEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 
@@ -12,7 +12,23 @@ const prices: Record<string, string> = {
 export function BookingForm({ initialProfessional, minDate }: { initialProfessional: string; minDate: string }) {
   const [consultation, setConsultation] = useState('Consulta sem análise documental');
   const [professional, setProfessional] = useState(initialProfessional);
+  const [dateError, setDateError] = useState('');
+  const [submitStatus, setSubmitStatus] = useState('');
   const price = useMemo(() => prices[consultation], [consultation]);
+
+  function validatePreferredDate(event: ChangeEvent<HTMLInputElement>) {
+    const input = event.currentTarget;
+    const [year, month, day] = input.value.split('-').map(Number);
+    const weekday = year && month && day
+      ? new Date(Date.UTC(year, month - 1, day)).getUTCDay()
+      : -1;
+    const message = weekday === 0 || weekday === 6
+      ? 'Escolha uma data de segunda a sexta-feira.'
+      : '';
+
+    input.setCustomValidity(message);
+    setDateError(message);
+  }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -33,11 +49,13 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
       `Telefone: ${data.get('telefone')}`,
       `E-mail: ${data.get('email')}`,
     ].join('\n');
+    setSubmitStatus('Tudo certo. Abrindo o WhatsApp para concluir a solicitação.');
     window.location.assign(`https://wa.me/5582994104373?text=${encodeURIComponent(message)}`);
   }
 
   return (
-    <form className="booking-form" onSubmit={submit}>
+    <form className="booking-form" onSubmit={submit} aria-describedby="booking-form-help">
+      <p className="booking-form-help" id="booking-form-help">Todos os campos são necessários. A solicitação só será enviada quando você continuar pelo WhatsApp.</p>
       <div className="form-section">
         <span className="form-number">01</span>
         <div>
@@ -58,13 +76,13 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
             </label>
             <label>
               Tipo de consulta
-              <select value={consultation} onChange={(event) => setConsultation(event.target.value)}>
+              <select name="consulta" value={consultation} onChange={(event) => setConsultation(event.target.value)}>
                 {Object.keys(prices).map((option) => <option key={option}>{option}</option>)}
               </select>
             </label>
             <label>
               Profissional
-              <select value={professional} onChange={(event) => setProfessional(event.target.value)}>
+              <select name="profissional" value={professional} onChange={(event) => setProfessional(event.target.value)}>
                 <option>Primeiro profissional disponível</option>
                 <option>Cosmélia Fôlha</option>
                 <option>Domingos Sávio de Sousa</option>
@@ -88,7 +106,15 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
           <div className="field-grid">
             <label>
               Data preferida
-              <input name="data" type="date" min={minDate} required />
+              <input
+                name="data"
+                type="date"
+                min={minDate}
+                required
+                onChange={validatePreferredDate}
+                aria-invalid={dateError ? true : undefined}
+                aria-describedby={dateError ? 'date-guidance date-error' : 'date-guidance'}
+              />
             </label>
             <label>
               Período
@@ -99,7 +125,8 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
               </select>
             </label>
           </div>
-          <p className="field-note">A data e o horário serão confirmados pela equipe conforme disponibilidade.</p>
+          <p className="field-note" id="date-guidance">Atendimento de segunda a sexta. A data e o horário serão confirmados pela equipe conforme disponibilidade.</p>
+          {dateError && <p className="field-error" id="date-error" role="alert">{dateError}</p>}
         </div>
       </div>
 
@@ -133,6 +160,7 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
             <div><span>Valor da consulta</span><strong>{price}</strong></div>
             <button className="button button-gold" type="submit">Solicitar pelo WhatsApp ↗</button>
           </div>
+          <p className="submit-status" role="status" aria-live="polite">{submitStatus}</p>
           <p className="field-note">O envio não confirma automaticamente a consulta nem realiza cobrança.</p>
         </div>
       </div>

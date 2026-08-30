@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { MouseEvent } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const links = [
   ['Atuação', '/#atuacao'],
@@ -14,6 +14,31 @@ const links = [
 
 export function Header() {
   const mobileMenu = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => {
+    function closeOnOutsideInteraction(event: PointerEvent) {
+      const menu = mobileMenu.current;
+      if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) {
+        menu.removeAttribute('open');
+      }
+    }
+
+    function closeOnEscape(event: KeyboardEvent) {
+      const menu = mobileMenu.current;
+      if (event.key === 'Escape' && menu?.open) {
+        menu.removeAttribute('open');
+        menu.querySelector('summary')?.focus();
+      }
+    }
+
+    document.addEventListener('pointerdown', closeOnOutsideInteraction);
+    document.addEventListener('keydown', closeOnEscape);
+
+    return () => {
+      document.removeEventListener('pointerdown', closeOnOutsideInteraction);
+      document.removeEventListener('keydown', closeOnEscape);
+    };
+  }, []);
 
   function closeMobileMenu() {
     mobileMenu.current?.removeAttribute('open');
@@ -41,7 +66,10 @@ export function Header() {
         </nav>
         <Link className="header-cta" href="/agendar">Agendar consulta</Link>
         <details className="mobile-menu" ref={mobileMenu}>
-          <summary aria-label="Abrir menu de navegação">Menu</summary>
+          <summary>
+            <span>Menu</span>
+            <span className="mobile-menu-icon" aria-hidden="true">+</span>
+          </summary>
           <nav aria-label="Navegação para dispositivos móveis">
             {links.map(([label, href]) => <Link href={href} key={href} onClick={closeMobileMenu}>{label}</Link>)}
             <Link href="/agendar" onClick={closeMobileMenu}>Agendar consulta</Link>

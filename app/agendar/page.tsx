@@ -42,6 +42,11 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
           <h1>Vamos entender o que você precisa.</h1>
           <p>Preencha as informações essenciais e conclua a solicitação diretamente pelo nosso WhatsApp oficial.</p>
           <div className="booking-badges"><span>Presencial ou on-line</span><span>Segunda a sexta · 9h às 18h</span></div>
+          <ol className="booking-steps" aria-label="Como funciona a solicitação de consulta">
+            <li><span>01</span><div><strong>Escolha o atendimento</strong><small>Área, formato e profissional de preferência.</small></div></li>
+            <li><span>02</span><div><strong>Indique uma data</strong><small>A equipe confirma o melhor horário disponível.</small></div></li>
+            <li><span>03</span><div><strong>Continue no WhatsApp</strong><small>A mensagem é preparada sem enviar documentos ou cobrar.</small></div></li>
+          </ol>
         </section>
         <BookingForm initialProfessional={initialProfessional} minDate={getTodayInMaceio()} />
       </main>

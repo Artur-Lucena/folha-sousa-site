@@ -198,7 +198,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .booking-hero > p:not(.eyebrow) { max-width: 650px; margin: 34px 0 0; color: rgba(255,255,255,.68); font-size: 16px; line-height: 1.7; }
 .booking-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 38px; }
 .booking-badges span { padding: 9px 13px; border: 1px solid rgba(255,255,255,.22); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+.booking-steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 0; max-width: 1040px; margin: 64px 0 0; padding: 0; list-style: none; border-top: 1px solid rgba(255,255,255,.18); }
+.booking-steps li { display: grid; grid-template-columns: 34px 1fr; gap: 16px; padding: 25px 28px 0 0; }
+.booking-steps li + li { padding-left: 28px; border-left: 1px solid rgba(255,255,255,.18); }
+.booking-steps li > span { padding-top: 3px; color: var(--gold-light); font: 10px var(--sans); letter-spacing: .12em; }
+.booking-steps li > div { display: flex; flex-direction: column; gap: 8px; }
+.booking-steps strong { font: 400 19px/1.2 var(--serif); }
+.booking-steps small { color: rgba(255,255,255,.58); font: 11px/1.55 var(--sans); }
 .booking-form { width: min(100% - 48px,1260px); margin: 0 auto; padding: 34px 0 120px; }
+.booking-form-help { margin: 0; padding: 24px 0 20px 126px; color: var(--muted); border-bottom: 1px solid var(--line); font: 11px/1.6 var(--sans); }
 .form-section { display: grid; grid-template-columns: 90px 1fr; gap: 36px; padding: 64px 0; border-bottom: 1px solid var(--line); }
 .form-number { padding-top: 10px; color: #8c693d; font: 14px var(--serif); }
 .form-section h2 { margin: 0 0 34px; font: 400 clamp(33px,4vw,52px)/1.05 var(--serif); letter-spacing: -.03em; }
@@ -207,7 +215,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .field-grid label { display: flex; flex-direction: column; gap: 10px; color: #52605a; font-size: 10px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
 .field-grid input, .field-grid select { width: 100%; height: 58px; padding: 0 16px; color: var(--ink); background: var(--paper-light); border: 1px solid rgba(28,29,27,.18); border-radius: var(--radius); outline: none; font-size: 14px; text-transform: none; }
 .field-grid input:focus, .field-grid select:focus { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(184,145,92,.13); }
+.field-grid input[aria-invalid="true"] { border-color: #985044; box-shadow: 0 0 0 2px rgba(152,80,68,.12); }
 .field-note { margin: 15px 0 0; color: #747e79; font-size: 11px; line-height: 1.6; }
+.field-error { margin: 9px 0 0; color: #7c3027; font: 700 11px/1.55 var(--sans); }
 .privacy-note { margin-top: 28px; padding: 22px 24px; background: rgba(184,145,92,.1); border-left: 2px solid var(--gold); }
 .privacy-note strong { font: 18px var(--serif); }
 .privacy-note p { margin: 8px 0 0; color: var(--muted); font-size: 12px; line-height: 1.65; }
@@ -218,6 +228,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .booking-total > div { display: flex; flex-direction: column; gap: 5px; }
 .booking-total span { color: var(--muted); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
 .booking-total strong { font: 34px var(--serif); }
+.submit-status { min-height: 1.2em; margin: 14px 0 0; color: #52605a; font: 700 11px/1.5 var(--sans); }
 
 /* Legal pages */
 .legal-page { background: var(--paper-light); }
@@ -278,10 +289,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .desktop-nav { display: none; }
   .brand img { width: 170px; }
   .mobile-menu { position: relative; display: block; order: 3; }
-  .mobile-menu summary { cursor: pointer; list-style: none; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .mobile-menu summary { min-height: 44px; display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .mobile-menu summary::-webkit-details-marker { display: none; }
-  .mobile-menu nav { position: absolute; top: 34px; right: 0; width: 230px; display: flex; flex-direction: column; padding: 16px; background: var(--paper-light); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 20px 40px rgba(28,29,27,.13); }
-  .mobile-menu nav a { padding: 12px 8px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .mobile-menu-icon { color: #88663b; font-size: 17px; font-weight: 400; line-height: 1; transition: transform .35s var(--ease-luxury); }
+  .mobile-menu[open] .mobile-menu-icon { transform: rotate(45deg); }
+  .mobile-menu nav { position: absolute; top: 46px; right: 0; width: 246px; display: flex; flex-direction: column; padding: 12px 16px; background: var(--paper-light); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 20px 40px rgba(28,29,27,.13); }
+  .mobile-menu nav a { min-height: 46px; display: flex; align-items: center; padding: 0 8px; border-bottom: 1px solid var(--line); font-size: 13px; }
+  .mobile-menu nav a:last-child { border-bottom: 0; color: #765934; font-weight: 600; }
   .header-cta { display: none; }
   .hero { min-height: 0; grid-template-columns: 1fr; }
   .hero-copy { min-height: 620px; padding: 76px 30px 50px; }
@@ -352,7 +366,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .whatsapp-float b { width: 30px; height: 30px; }
   .booking-hero, .legal-hero { padding: 78px 24px 72px; }
   .booking-hero h1, .legal-hero h1 { font-size: 58px; }
+  .booking-steps { grid-template-columns: 1fr; gap: 0; margin-top: 48px; }
+  .booking-steps li, .booking-steps li + li { padding: 20px 0; border-left: 0; border-bottom: 1px solid rgba(255,255,255,.14); }
+  .booking-steps li:last-child { border-bottom: 0; }
   .booking-form { width: min(100% - 44px,1260px); }
+  .booking-form-help { padding: 22px 0; }
   .form-section { grid-template-columns: 1fr; gap: 16px; padding: 48px 0; }
   .field-grid { grid-template-columns: 1fr; }
   .field-full { grid-column: auto; }

@@ -99,9 +99,9 @@ export default function Home() {
           </div>
 
           <div className="hero-visual" aria-label="Sócios do escritório Fôlha & Sousa">
-            <Image className="hero-office" src="/assets/hero-office.jpg" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 900px) 100vw, 55vw" />
+            <Image className="hero-office" src="/assets/hero-office.jpg" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 1050px) 100vw, 55vw" />
             <div className="hero-shade" />
-            <Image className="hero-people" src="/assets/hero-people.webp" alt="Cosmélia Fôlha e Domingos Sávio de Sousa" width={615} height={659} priority />
+            <Image className="hero-people" src="/assets/hero-people.webp" alt="Cosmélia Fôlha e Domingos Sávio de Sousa" width={615} height={659} sizes="(max-width: 720px) 90vw, (max-width: 1050px) 72vw, 40vw" priority />
             <div className="hero-caption">
               <span>Fôlha & Sousa</span>
               <small>Advogados</small>
@@ -129,7 +129,7 @@ export default function Home() {
             {practiceAreas.map((area) => (
               <article className="area-card weighted-reveal" key={area.number}>
                 <div className="area-image">
-                  <Image src={area.image} alt="" fill sizes="(max-width: 700px) 100vw, 33vw" />
+                  <Image src={area.image} alt="" fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
                   <span>{area.number}</span>
                 </div>
                 <div className="area-copy">
@@ -143,7 +143,7 @@ export default function Home() {
 
         <section className="about-section" id="escritorio">
           <div className="about-image weighted-reveal">
-            <Image src="/assets/team.webp" alt="Equipe Fôlha & Sousa Advogados" fill sizes="(max-width: 900px) 100vw, 50vw" />
+            <Image src="/assets/team.webp" alt="Equipe Fôlha & Sousa Advogados" fill sizes="(max-width: 1050px) 100vw, 50vw" />
           </div>
           <div className="about-copy weighted-reveal">
             <p className="eyebrow">O escritório</p>
@@ -177,7 +177,7 @@ export default function Home() {
           </div>
           <div className="lawyer-grid">
             <article className="lawyer-card weighted-reveal">
-              <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 700px) 100vw, 45vw" /></div>
+              <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócia · Direito Civil e de Família</p>
                 <h3>Cosmélia Fôlha</h3>
@@ -187,7 +187,7 @@ export default function Home() {
               </div>
             </article>
             <article className="lawyer-card lawyer-card-reverse weighted-reveal">
-              <div className="lawyer-photo"><Image src="/assets/savio.webp" alt="Domingos Sávio de Sousa" fill sizes="(max-width: 700px) 100vw, 45vw" /></div>
+              <div className="lawyer-photo"><Image src="/assets/savio.webp" alt="Domingos Sávio de Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócio · Direito Civil e Tributário</p>
                 <h3>Domingos Sávio<br />de Sousa</h3>
@@ -200,7 +200,7 @@ export default function Home() {
         </section>
 
         <section className="reach-section">
-          <Image className="reach-map" src="/assets/world-map.png" alt="Mapa-múndi" width={1600} height={900} />
+          <Image className="reach-map" src="/assets/world-map.png" alt="" width={1600} height={900} sizes="(max-width: 720px) 150vw, 72vw" />
           <div className="reach-copy section-shell weighted-reveal">
             <p className="eyebrow">Atendimento sem fronteiras</p>
             <h2>Nacional e internacional.</h2>
@@ -211,7 +211,7 @@ export default function Home() {
 
         <section className="contact-section" id="contato">
           <div className="contact-photo weighted-reveal">
-            <Image src="/assets/hero-office.jpg" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 900px) 100vw, 45vw" />
+            <Image src="/assets/hero-office.jpg" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" />
           </div>
           <div className="contact-copy weighted-reveal">
             <p className="eyebrow">Contato</p>

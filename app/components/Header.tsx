@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import type { MouseEvent } from 'react';
+import type { FocusEvent, MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
 
 const links = [
@@ -44,6 +44,12 @@ export function Header() {
     mobileMenu.current?.removeAttribute('open');
   }
 
+  function closeAfterFocusLeaves(event: FocusEvent<HTMLDetailsElement>) {
+    if (event.relatedTarget instanceof Node && !event.currentTarget.contains(event.relatedTarget)) {
+      closeMobileMenu();
+    }
+  }
+
   function skipToContent(event: MouseEvent<HTMLAnchorElement>) {
     event.preventDefault();
     const mainContent = document.getElementById('main-content');
@@ -65,7 +71,7 @@ export function Header() {
           {links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
         <Link className="header-cta" href="/agendar">Agendar consulta</Link>
-        <details className="mobile-menu" ref={mobileMenu}>
+        <details className="mobile-menu" ref={mobileMenu} onBlur={closeAfterFocusLeaves}>
           <summary>
             <span>Menu</span>
             <span className="mobile-menu-icon" aria-hidden="true">+</span>

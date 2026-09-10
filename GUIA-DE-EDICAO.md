@@ -16,6 +16,8 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `app/components/Header.tsx`: cabeçalho e menus.
 - `app/components/Footer.tsx`: rodapé, redes sociais e botão do WhatsApp.
 - `app/agendar/`: página e formulário de agendamento.
+- `app/agendar/booking.ts`: opções, preços, validação e preparação da mensagem de agendamento.
+- `tests/booking.test.mjs`: testes das regras de agendamento, sem enviar mensagens.
 - `app/politicas-de-privacidade/`: política de privacidade.
 - `app/termo-de-consulta-juridica/`: termo da consulta.
 - `app/termos-de-uso/`: termos de uso.
@@ -43,7 +45,8 @@ Depois, acesse `http://localhost:3000/`.
 
 ```powershell
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck
+pnpm test
 pnpm build
 ```
 
@@ -52,6 +55,12 @@ pnpm build
 As pastas `node_modules`, `dist`, `.next`, `.vinext` e `.wrangler`, além do arquivo `tsconfig.tsbuildinfo`, são geradas automaticamente. Elas não foram copiadas porque ocupam centenas de megabytes e podem ser recriadas pelos comandos acima.
 
 Ao alternar entre Windows e Linux, reinstale as dependências no sistema em uso. Não reutilize uma pasta `node_modules` criada pelo outro sistema operacional.
+
+## Agendamento e validação
+
+O formulário valida os dados no próprio dispositivo e prepara uma mensagem para o WhatsApp. Nome, telefone, e-mail, opções e aceite são verificados novamente antes de abrir o link; a data usa o dia corrente em Maceió, inclusive se a página atravessar a meia-noite. A disponibilidade e os feriados continuam sujeitos à confirmação da equipe.
+
+Os controles permanecem desabilitados até o JavaScript estar pronto. Sem JavaScript, há um contato direto alternativo; os dados não são enviados por GET à página. Ao alterar as regras de atendimento, atualize os testes e confira também os textos legais, que dependem de aprovação do escritório.
 
 ## Importante
 

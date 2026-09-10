@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { BookingForm } from './BookingForm';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
+import { getTodayInMaceio, professionals } from './booking';
 
 export const metadata: Metadata = {
   title: 'Agendar Consulta | Fôlha & Sousa Advogados',
@@ -13,42 +14,33 @@ type BookingPageProps = {
   searchParams: Promise<{ profissional?: string | string[] }>;
 };
 
-function getTodayInMaceio() {
-  const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: 'America/Maceio',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }).formatToParts(new Date());
-  const values = Object.fromEntries(parts.map(({ type, value }) => [type, value]));
-  return `${values.year}-${values.month}-${values.day}`;
-}
-
 export default async function BookingPage({ searchParams }: BookingPageProps) {
   const requestedProfessional = (await searchParams).profissional;
   const professionalKey = Array.isArray(requestedProfessional) ? requestedProfessional[0] : requestedProfessional;
   const initialProfessional = professionalKey === 'cosmelia'
-    ? 'Cosmélia Fôlha'
+    ? professionals[1]
     : professionalKey === 'savio'
-      ? 'Domingos Sávio de Sousa'
-      : 'Primeiro profissional disponível';
+      ? professionals[2]
+      : professionals[0];
 
   return (
     <>
       <Header />
       <main className="booking-page" id="main-content" tabIndex={-1}>
         <section className="booking-hero">
-          <p className="eyebrow">Atendimento jurídico</p>
-          <h1>Vamos entender o que você precisa.</h1>
-          <p>Preencha as informações essenciais e conclua a solicitação diretamente pelo nosso WhatsApp oficial.</p>
-          <div className="booking-badges"><span>Presencial ou on-line</span><span>Segunda a sexta · 9h às 18h</span></div>
+          <div className="booking-heading">
+            <p className="eyebrow">Atendimento jurídico</p>
+            <h1>Solicite sua consulta.</h1>
+            <p>Escolha o atendimento e indique sua preferência de horário. Nossa equipe confirma os detalhes pelo WhatsApp.</p>
+            <div className="booking-badges"><span>Presencial ou on-line</span><span>Segunda a sexta · 9h às 18h</span></div>
+          </div>
           <ol className="booking-steps" aria-label="Como funciona a solicitação de consulta">
             <li><span>01</span><div><strong>Escolha o atendimento</strong><small>Área, formato e profissional de preferência.</small></div></li>
             <li><span>02</span><div><strong>Indique uma data</strong><small>A equipe confirma o melhor horário disponível.</small></div></li>
             <li><span>03</span><div><strong>Continue no WhatsApp</strong><small>A mensagem é preparada sem enviar documentos ou cobrar.</small></div></li>
           </ol>
         </section>
-        <BookingForm initialProfessional={initialProfessional} minDate={getTodayInMaceio()} />
+        <BookingForm key={initialProfessional} initialProfessional={initialProfessional} minDate={getTodayInMaceio()} />
       </main>
       <Footer />
     </>

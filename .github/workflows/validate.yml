@@ -33,3 +33,9 @@ jobs:
 
       - name: Compilar
         run: pnpm build
+
+      - name: Verificar tipos
+        run: pnpm typecheck
+
+      - name: Verificar regras de agendamento
+        run: pnpm test

@@ -1,169 +1,179 @@
 'use client';
 
-import type { ChangeEvent, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useState, useSyncExternalStore } from 'react';
+import { flushSync } from 'react-dom';
+import {
+  areas, buildBookingUrl, consultationPrices, formats, getTodayInMaceio,
+  periods, professionals, validateBooking, whatsappUrl,
+  type BookingErrors, type BookingField,
+} from './booking';
 
-const prices: Record<string, string> = {
-  'Consulta sem análise documental': 'R$ 350,00',
-  'Consulta com análise documental': 'R$ 500,00',
-};
+const subscribe = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 
 export function BookingForm({ initialProfessional, minDate }: { initialProfessional: string; minDate: string }) {
-  const [consultation, setConsultation] = useState('Consulta sem análise documental');
-  const [professional, setProfessional] = useState(initialProfessional);
-  const [dateError, setDateError] = useState('');
+  const ready = useSyncExternalStore(subscribe, clientReady, serverReady);
+  const [consultation, setConsultation] = useState<keyof typeof consultationPrices>('Consulta sem análise documental');
+  const [errors, setErrors] = useState<BookingErrors>({});
+  const [earliestDate, setEarliestDate] = useState(minDate);
   const [submitStatus, setSubmitStatus] = useState('');
-  const price = useMemo(() => prices[consultation], [consultation]);
 
-  function validatePreferredDate(event: ChangeEvent<HTMLInputElement>) {
-    const input = event.currentTarget;
-    const [year, month, day] = input.value.split('-').map(Number);
-    const weekday = year && month && day
-      ? new Date(Date.UTC(year, month - 1, day)).getUTCDay()
-      : -1;
-    const message = weekday === 0 || weekday === 6
-      ? 'Escolha uma data de segunda a sexta-feira.'
-      : '';
-
-    input.setCustomValidity(message);
-    setDateError(message);
+  function refreshField(event: FormEvent<HTMLFormElement>) {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement || target instanceof HTMLSelectElement)) return;
+    const field = target.name as BookingField;
+    const today = getTodayInMaceio();
+    if (field === 'data') setEarliestDate(today);
+    // Recheck the edited field without announcing errors in untouched fields.
+    if (errors[field] || event.type === 'blur') {
+      const nextError = validateBooking(new FormData(event.currentTarget), today)[field];
+      setErrors((current) => ({ ...current, [field]: nextError }));
+    }
+    if (event.type === 'change') setSubmitStatus('');
   }
 
   function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const rawDate = String(data.get('data') ?? '');
-    const formattedDate = rawDate ? rawDate.split('-').reverse().join('/') : 'A combinar';
-    const message = [
-      'Olá, gostaria de solicitar um agendamento com o Fôlha & Sousa Advogados.',
-      '',
-      `Área: ${data.get('area')}`,
-      `Consulta: ${consultation} — ${price}`,
-      `Profissional: ${professional}`,
-      `Formato: ${data.get('formato')}`,
-      `Data preferida: ${formattedDate}`,
-      `Período: ${data.get('periodo')}`,
-      '',
-      `Nome: ${data.get('nome')}`,
-      `Telefone: ${data.get('telefone')}`,
-      `E-mail: ${data.get('email')}`,
-    ].join('\n');
-    setSubmitStatus('Tudo certo. Abrindo o WhatsApp para concluir a solicitação.');
-    window.location.assign(`https://wa.me/5582994104373?text=${encodeURIComponent(message)}`);
+    if (!ready) return;
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const today = getTodayInMaceio();
+    setEarliestDate(today);
+    const nextErrors = validateBooking(data, today);
+    // Commit error descriptions before moving focus so they can be announced.
+    flushSync(() => setErrors(nextErrors));
+    if (Object.keys(nextErrors).length) {
+      setSubmitStatus('Revise os campos destacados para continuar.');
+      const firstInvalid = Array.from(form.elements).find(
+        (element) => (element instanceof HTMLInputElement || element instanceof HTMLSelectElement)
+          && nextErrors[element.name as BookingField],
+      );
+      if (firstInvalid instanceof HTMLElement) firstInvalid.focus();
+      return;
+    }
+    setSubmitStatus('Abrindo o WhatsApp. Revise a mensagem e envie por lá para concluir.');
+    window.location.assign(buildBookingUrl(data, today));
+  }
+
+  function errorFor(field: BookingField) {
+    return errors[field] ? <span className="field-error" id={field + '-error'}>{errors[field]}</span> : null;
+  }
+
+  function describedBy(field: BookingField, help?: string) {
+    return [help, errors[field] ? field + '-error' : null].filter(Boolean).join(' ') || undefined;
   }
 
   return (
-    <form className="booking-form" onSubmit={submit} aria-describedby="booking-form-help">
-      <p className="booking-form-help" id="booking-form-help">Todos os campos são necessários. A solicitação só será enviada quando você continuar pelo WhatsApp.</p>
-      <div className="form-section">
-        <span className="form-number">01</span>
+    <form className="booking-form" method="post" noValidate onSubmit={submit} onChange={refreshField} onBlur={refreshField} aria-describedby="booking-form-help">
+      <p className="booking-form-help" id="booking-form-help">Preencha todos os campos. Você poderá revisar a mensagem no WhatsApp antes de enviá-la.</p>
+      <noscript>
+        <p className="privacy-note">Para preencher o formulário, ative o JavaScript. Você também pode <a href={whatsappUrl} target="_blank" rel="noreferrer">falar diretamente com a equipe pelo WhatsApp</a>.</p>
+      </noscript>
+
+      <fieldset className="form-section" disabled={!ready} aria-labelledby="booking-service-title">
+        <span className="form-number" aria-hidden="true">01</span>
         <div>
-          <h2>Como podemos orientar você?</h2>
+          <h2 id="booking-service-title">Seu atendimento</h2>
           <div className="field-grid">
             <label>
               Área de interesse
-              <select name="area" required defaultValue="">
+              <select name="area" required defaultValue="" aria-invalid={!!errors.area} aria-describedby={describedBy('area')}>
                 <option value="" disabled>Selecione uma área</option>
-                <option>Direito Civil e Sucessões</option>
-                <option>Direito Tributário</option>
-                <option>Direito Administrativo</option>
-                <option>Direito Empresarial</option>
-                <option>Direito Trabalhista</option>
-                <option>Direito Público</option>
-                <option>Orientação inicial</option>
+                {areas.map((area) => <option key={area}>{area}</option>)}
               </select>
+              {errorFor('area')}
             </label>
             <label>
               Tipo de consulta
-              <select name="consulta" value={consultation} onChange={(event) => setConsultation(event.target.value)}>
-                {Object.keys(prices).map((option) => <option key={option}>{option}</option>)}
+              <select name="consulta" required value={consultation} onChange={(event) => setConsultation(event.target.value as keyof typeof consultationPrices)} aria-invalid={!!errors.consulta} aria-describedby={describedBy('consulta', 'consultation-price')}>
+                {Object.keys(consultationPrices).map((option) => <option key={option}>{option}</option>)}
               </select>
+              {errorFor('consulta')}
             </label>
             <label>
               Profissional
-              <select name="profissional" value={professional} onChange={(event) => setProfessional(event.target.value)}>
-                <option>Primeiro profissional disponível</option>
-                <option>Cosmélia Fôlha</option>
-                <option>Domingos Sávio de Sousa</option>
+              <select name="profissional" required defaultValue={initialProfessional} aria-invalid={!!errors.profissional} aria-describedby={describedBy('profissional')}>
+                {professionals.map((professional) => <option key={professional}>{professional}</option>)}
               </select>
+              {errorFor('profissional')}
             </label>
             <label>
               Formato
-              <select name="formato" required>
-                <option>On-line</option>
-                <option>Presencial em Maceió</option>
+              <select name="formato" required aria-invalid={!!errors.formato} aria-describedby={describedBy('formato')}>
+                {formats.map((format) => <option key={format}>{format}</option>)}
               </select>
+              {errorFor('formato')}
             </label>
           </div>
+          <p className="consultation-price" id="consultation-price" aria-live="polite" aria-atomic="true">
+            <span>Valor da consulta</span><strong>{consultationPrices[consultation]}</strong><small>Sem cobrança pelo site</small>
+          </p>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="form-section">
-        <span className="form-number">02</span>
+      <fieldset className="form-section" disabled={!ready} aria-labelledby="booking-date-title">
+        <span className="form-number" aria-hidden="true">02</span>
         <div>
-          <h2>Quando prefere ser atendido?</h2>
+          <h2 id="booking-date-title">Sua preferência de horário</h2>
           <div className="field-grid">
             <label>
               Data preferida
-              <input
-                name="data"
-                type="date"
-                min={minDate}
-                required
-                onChange={validatePreferredDate}
-                aria-invalid={dateError ? true : undefined}
-                aria-describedby={dateError ? 'date-guidance date-error' : 'date-guidance'}
-              />
+              <input name="data" type="date" min={earliestDate} required onFocus={() => setEarliestDate(getTodayInMaceio())} aria-invalid={!!errors.data} aria-describedby={describedBy('data', 'date-guidance')} />
+              {errorFor('data')}
             </label>
             <label>
               Período
-              <select name="periodo" required>
-                <option>Manhã · 9h às 12h</option>
-                <option>Tarde · 13h às 18h</option>
-                <option>Primeiro horário disponível</option>
+              <select name="periodo" required aria-invalid={!!errors.periodo} aria-describedby={describedBy('periodo')}>
+                {periods.map((period) => <option key={period}>{period}</option>)}
               </select>
+              {errorFor('periodo')}
             </label>
           </div>
-          <p className="field-note" id="date-guidance">Atendimento de segunda a sexta. A data e o horário serão confirmados pela equipe conforme disponibilidade.</p>
-          {dateError && <p className="field-error" id="date-error" role="alert">{dateError}</p>}
+          <p className="field-note" id="date-guidance">De segunda a sexta, no horário de Maceió. A equipe confirma a data e o horário conforme disponibilidade.</p>
         </div>
-      </div>
+      </fieldset>
 
-      <div className="form-section">
-        <span className="form-number">03</span>
+      <fieldset className="form-section" disabled={!ready} aria-labelledby="booking-contact-title">
+        <span className="form-number" aria-hidden="true">03</span>
         <div>
-          <h2>Seus dados para contato</h2>
+          <h2 id="booking-contact-title">Seus dados de contato</h2>
           <div className="field-grid">
             <label>
               Nome completo
-              <input name="nome" type="text" autoComplete="name" required placeholder="Como devemos chamar você?" />
+              <input name="nome" type="text" autoComplete="name" maxLength={120} required placeholder="Como devemos chamar você?" aria-invalid={!!errors.nome} aria-describedby={describedBy('nome')} />
+              {errorFor('nome')}
             </label>
             <label>
               Telefone / WhatsApp
-              <input name="telefone" type="tel" inputMode="tel" autoComplete="tel" minLength={10} maxLength={20} required placeholder="(00) 00000-0000" />
+              <input name="telefone" type="tel" inputMode="tel" autoComplete="tel" maxLength={30} required placeholder="DDD + número ou código do país" aria-invalid={!!errors.telefone} aria-describedby={describedBy('telefone')} />
+              {errorFor('telefone')}
             </label>
             <label className="field-full">
               E-mail
-              <input name="email" type="email" autoComplete="email" required placeholder="voce@exemplo.com.br" />
+              <input name="email" type="email" autoComplete="email" maxLength={254} required placeholder="voce@exemplo.com.br" aria-invalid={!!errors.email} aria-describedby={describedBy('email')} />
+              {errorFor('email')}
             </label>
           </div>
           <div className="privacy-note">
             <strong>Proteção desde o primeiro contato.</strong>
-            <p>Não envie documentos ou detalhes sensíveis nesta etapa. Ao continuar, os dados acima serão usados apenas para iniciar a conversa de agendamento no WhatsApp.</p>
+            <p>Não envie documentos ou detalhes sensíveis nesta etapa. Os dados acima serão incluídos na mensagem de agendamento que você abrirá no WhatsApp.</p>
           </div>
           <label className="consent-field">
-            <input type="checkbox" required />
-            <span>Li e concordo com o <Link href="/termo-de-consulta-juridica" target="_blank" rel="noreferrer">Termo de Consulta Jurídica</Link> e com a <Link href="/politicas-de-privacidade" target="_blank" rel="noreferrer">Política de Privacidade</Link>.</span>
+            <input name="consentimento" type="checkbox" required aria-invalid={!!errors.consentimento} aria-describedby={describedBy('consentimento')} />
+            <span>Li e concordo com o <Link href="/termo-de-consulta-juridica" target="_blank" rel="noreferrer">Termo de Consulta Jurídica (nova aba)</Link> e com a <Link href="/politicas-de-privacidade" target="_blank" rel="noreferrer">Política de Privacidade (nova aba)</Link>.</span>
           </label>
+          {errorFor('consentimento')}
           <div className="booking-total">
-            <div><span>Valor da consulta</span><strong>{price}</strong></div>
-            <button className="button button-gold" type="submit">Solicitar pelo WhatsApp ↗</button>
+            <div><span>Valor da consulta</span><strong>{consultationPrices[consultation]}</strong></div>
+            <button className="button button-gold" type="submit" disabled={!ready}>Continuar no WhatsApp <span aria-hidden="true">↗</span></button>
           </div>
-          <p className="submit-status" role="status" aria-live="polite">{submitStatus}</p>
-          <p className="field-note">O envio não confirma automaticamente a consulta nem realiza cobrança.</p>
+          <p className="submit-status" role="status" aria-atomic="true">{submitStatus}</p>
+          <p className="field-note">A consulta depende de confirmação da equipe. O site não realiza cobrança.</p>
         </div>
-      </div>
+      </fieldset>
     </form>
   );
 }

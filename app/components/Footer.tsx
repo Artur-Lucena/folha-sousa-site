@@ -32,7 +32,7 @@ export function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2026 Fôlha & Sousa Advogados. Todos os direitos reservados.</span>
+        <span>© {new Date().getFullYear()} Fôlha & Sousa Advogados. Todos os direitos reservados.</span>
         <span>Publicidade de caráter exclusivamente informativo.</span>
       </div>
       <a

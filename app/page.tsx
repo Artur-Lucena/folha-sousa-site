@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_INTERNATIONAL_NUMBER } from './lib/whatsapp';
 
 const practiceAreas = [
   {
@@ -52,7 +53,7 @@ const legalServiceData = {
   name: 'Fôlha & Sousa Advogados',
   url: 'https://folhaesousa.adv.br/',
   image: 'https://folhaesousa.adv.br/og.png',
-  telephone: '+55 82 99410-4373',
+  telephone: `+55 ${WHATSAPP_DISPLAY_NUMBER}`,
   email: 'contato@folhaesousa.adv.br',
   address: {
     '@type': 'PostalAddress',
@@ -226,7 +227,7 @@ export default function Home() {
             </div>
             <div className="contact-row">
               <span>Telefone</span>
-              <a href="tel:+5582994104373">(82) 99410-4373</a>
+              <a href={`tel:+${WHATSAPP_INTERNATIONAL_NUMBER}`}>{WHATSAPP_DISPLAY_NUMBER}</a>
             </div>
             <div className="contact-row">
               <span>E-mail</span>

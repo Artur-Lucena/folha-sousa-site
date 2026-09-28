@@ -163,7 +163,7 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
           </div>
           <label className="consent-field">
             <input name="consentimento" type="checkbox" required aria-invalid={!!errors.consentimento} aria-describedby={describedBy('consentimento')} />
-            <span>Li e concordo com o <Link href="/termo-de-consulta-juridica" target="_blank" rel="noreferrer">Termo de Consulta Jurídica (nova aba)</Link> e com a <Link href="/politicas-de-privacidade" target="_blank" rel="noreferrer">Política de Privacidade (nova aba)</Link>.</span>
+            <span>Li e concordo com o <Link href="/termo-de-consulta-juridica" target="_blank" rel="noopener noreferrer">Termo de Consulta Jurídica (nova aba)</Link> e com a <Link href="/politicas-de-privacidade" target="_blank" rel="noopener noreferrer">Política de Privacidade (nova aba)</Link>.</span>
           </label>
           {errorFor('consentimento')}
           <div className="booking-total">

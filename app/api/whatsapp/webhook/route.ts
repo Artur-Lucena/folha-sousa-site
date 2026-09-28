@@ -45,11 +45,7 @@ export async function POST(request: Request) {
   // Aceita tanto o envelope simplificado { from, text } quanto o
   // envelope Meta (entry[].changes[].value.messages[]) para facilitar
   // o teste inicial. Nenhum dado é persistido nesta fase.
-  const simplified = parseIncomingText(body);
-  const metaText = extractMetaText(body);
-  const incoming = simplified ?? metaText;
-
-  if (!incoming) {
+  if (!parseIncomingText(body) && !extractMetaText(body)) {
     return Response.json({ ok: false, reason: 'mensagem não reconhecida' }, { status: 422 });
   }
 
@@ -64,7 +60,7 @@ function extractMetaText(body: unknown): { from: string; text: string } | null {
   if (!Array.isArray(changes) || changes.length === 0) return null;
   const messages = (changes[0] as { value?: { messages?: unknown } }).value?.messages;
   if (!Array.isArray(messages) || messages.length === 0) return null;
-  const first = messages[0] as { from?: unknown; text?: { body?: unknown }; id?: unknown };
+  const first = messages[0] as { from?: unknown; text?: { body?: unknown } };
   if (typeof first.from !== 'string') return null;
   const text = first.text?.body;
   if (typeof text !== 'string' || !text.trim()) return null;

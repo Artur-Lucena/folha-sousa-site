@@ -7,6 +7,9 @@ export const professionals = ['Primeiro profissional disponível', 'Cosmélia F�
 export const areas = ['Direito Civil e Sucessões', 'Direito Tributário', 'Direito Administrativo', 'Direito Empresarial', 'Direito Trabalhista', 'Direito Público', 'Orientação inicial'] as const;
 export const formats = ['On-line', 'Presencial em Maceió'] as const;
 export const periods = ['Manhã · 9h às 12h', 'Tarde · 13h às 18h', 'Primeiro horário disponível'] as const;
+// Mantido igual a WHATSAPP_BASE_URL em app/lib/whatsapp.ts (fonte canônica do número).
+// A igualdade é verificada por tests/whatsapp.test.mjs; sem import direto para
+// que este módulo continue carregável pelo runner de testes do Node.
 export const whatsappUrl = 'https://wa.me/5582994104373';
 
 export type BookingField = 'area' | 'consulta' | 'profissional' | 'formato' | 'data' | 'periodo' | 'nome' | 'telefone' | 'email' | 'consentimento';

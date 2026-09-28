@@ -69,6 +69,10 @@ const legalServiceData = {
     opens: '09:00',
     closes: '18:00',
   }],
+  employee: [
+    { '@type': 'Attorney', name: 'Cosmélia Fôlha', jobTitle: 'Sócia · Direito Civil e de Família' },
+    { '@type': 'Attorney', name: 'Domingos Sávio de Sousa', jobTitle: 'Sócio · Direito Civil e Tributário' },
+  ],
 };
 
 export default function Home() {
@@ -129,7 +133,7 @@ export default function Home() {
             {practiceAreas.map((area) => (
               <article className="area-card weighted-reveal" key={area.number}>
                 <div className="area-image">
-                  <Image src={area.image} alt="" fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
+                  <Image src={area.image} alt={area.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
                   <span>{area.number}</span>
                 </div>
                 <div className="area-copy">
@@ -200,7 +204,7 @@ export default function Home() {
         </section>
 
         <section className="reach-section">
-          <Image className="reach-map" src="/assets/world-map.png" alt="" width={1600} height={900} sizes="(max-width: 720px) 150vw, 72vw" />
+          <Image className="reach-map" src="/assets/world-map.png" alt="" aria-hidden="true" width={1600} height={900} sizes="(max-width: 720px) 150vw, 72vw" />
           <div className="reach-copy section-shell weighted-reveal">
             <p className="eyebrow">Atendimento sem fronteiras</p>
             <h2>Nacional e internacional.</h2>
@@ -218,7 +222,7 @@ export default function Home() {
             <h2>Vamos conversar sobre o seu próximo passo.</h2>
             <div className="contact-row">
               <span>Endereço</span>
-              <a href="https://maps.app.goo.gl/4PRsv8cXWust6KXk6" target="_blank" rel="noreferrer">Av. Menino Marcelo, 9350<br />Empresarial Humberto Lobo, sala 309<br />Serraria · Maceió/AL · 57046-000 ↗</a>
+              <a href="https://maps.app.goo.gl/4PRsv8cXWust6KXk6" target="_blank" rel="noopener noreferrer">Av. Menino Marcelo, 9350<br />Empresarial Humberto Lobo, sala 309<br />Serraria · Maceió/AL · 57046-000 ↗</a>
             </div>
             <div className="contact-row">
               <span>Telefone</span>

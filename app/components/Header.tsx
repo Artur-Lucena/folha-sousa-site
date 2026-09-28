@@ -15,11 +15,18 @@ const links = [
 export function Header() {
   const mobileMenu = useRef<HTMLDetailsElement>(null);
 
+  function syncMobileMenuState() {
+    const menu = mobileMenu.current;
+    const summary = menu?.querySelector('summary');
+    if (summary) summary.setAttribute('aria-expanded', menu?.open ? 'true' : 'false');
+  }
+
   useEffect(() => {
     function closeOnOutsideInteraction(event: PointerEvent) {
       const menu = mobileMenu.current;
       if (menu?.open && event.target instanceof Node && !menu.contains(event.target)) {
         menu.removeAttribute('open');
+        menu.querySelector('summary')?.setAttribute('aria-expanded', 'false');
       }
     }
 
@@ -27,7 +34,9 @@ export function Header() {
       const menu = mobileMenu.current;
       if (event.key === 'Escape' && menu?.open) {
         menu.removeAttribute('open');
-        menu.querySelector('summary')?.focus();
+        const summary = menu.querySelector('summary') as HTMLElement | null;
+        summary?.setAttribute('aria-expanded', 'false');
+        summary?.focus();
       }
     }
 
@@ -42,6 +51,7 @@ export function Header() {
 
   function closeMobileMenu() {
     mobileMenu.current?.removeAttribute('open');
+    syncMobileMenuState();
   }
 
   function closeAfterFocusLeaves(event: FocusEvent<HTMLDetailsElement>) {
@@ -71,12 +81,12 @@ export function Header() {
           {links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
         <Link className="header-cta" href="/agendar">Agendar consulta</Link>
-        <details className="mobile-menu" ref={mobileMenu} onBlur={closeAfterFocusLeaves}>
-          <summary>
+        <details className="mobile-menu" ref={mobileMenu} onBlur={closeAfterFocusLeaves} onToggle={syncMobileMenuState}>
+          <summary aria-expanded="false" aria-controls="mobile-nav">
             <span>Menu</span>
             <span className="mobile-menu-icon" aria-hidden="true">+</span>
           </summary>
-          <nav aria-label="Navegação para dispositivos móveis">
+          <nav id="mobile-nav" aria-label="Navegação para dispositivos móveis">
             {links.map(([label, href]) => <Link href={href} key={href} onClick={closeMobileMenu}>{label}</Link>)}
             <Link href="/agendar" onClick={closeMobileMenu}>Agendar consulta</Link>
           </nav>

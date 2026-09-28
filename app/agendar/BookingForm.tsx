@@ -70,7 +70,7 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
     <form className="booking-form" method="post" noValidate onSubmit={submit} onChange={refreshField} onBlur={refreshField} aria-describedby="booking-form-help">
       <p className="booking-form-help" id="booking-form-help">Preencha todos os campos. Você poderá revisar a mensagem no WhatsApp antes de enviá-la.</p>
       <noscript>
-        <p className="privacy-note">Para preencher o formulário, ative o JavaScript. Você também pode <a href={whatsappUrl} target="_blank" rel="noreferrer">falar diretamente com a equipe pelo WhatsApp</a>.</p>
+        <p className="privacy-note">Para preencher o formulário, ative o JavaScript. Você também pode <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">falar diretamente com a equipe pelo WhatsApp</a>.</p>
       </noscript>
 
       <fieldset className="form-section" disabled={!ready} aria-labelledby="booking-service-title">

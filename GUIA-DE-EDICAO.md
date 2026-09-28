@@ -17,7 +17,12 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `app/components/Footer.tsx`: rodapé, redes sociais e botão do WhatsApp.
 - `app/agendar/`: página e formulário de agendamento.
 - `app/agendar/booking.ts`: opções, preços, validação e preparação da mensagem de agendamento.
+- `app/lib/whatsapp.ts`: número oficial, links `wa.me` e vocabulário do futuro chatbot.
+- `app/api/whatsapp/webhook/route.ts`: verificação e recepção do webhook (sem persistência).
+- `docs/WHATSAPP-CHATBOT.md`: guia de integração com a Cloud API.
+- `.env.example`: variáveis necessárias no servidor (nunca commitar valores reais).
 - `tests/booking.test.mjs`: testes das regras de agendamento, sem enviar mensagens.
+- `tests/whatsapp.test.mjs`: testes dos links e da verificação do webhook, sem segredos.
 - `app/politicas-de-privacidade/`: política de privacidade.
 - `app/termo-de-consulta-juridica/`: termo da consulta.
 - `app/termos-de-uso/`: termos de uso.

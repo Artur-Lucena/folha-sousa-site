@@ -14,13 +14,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'pt_BR',
     url: 'https://folhaesousa.adv.br/',
-    images: [{ url: 'https://folhaesousa.adv.br/og.png', width: 1536, height: 1024, alt: 'Fôlha & Sousa Advogados' }],
+    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Fôlha & Sousa Advogados',
     description: 'Clareza jurídica para decisões que importam.',
-    images: ['https://folhaesousa.adv.br/og.png'],
+    images: ['https://folhaesousa.adv.br/og.jpg'],
   },
 };
 

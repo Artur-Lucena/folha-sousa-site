@@ -52,7 +52,7 @@ const legalServiceData = {
   '@type': 'LegalService',
   name: 'Fôlha & Sousa Advogados',
   url: 'https://folhaesousa.adv.br/',
-  image: 'https://folhaesousa.adv.br/og.png',
+  image: 'https://folhaesousa.adv.br/og.jpg',
   telephone: `+55 ${WHATSAPP_DISPLAY_NUMBER}`,
   email: 'contato@folhaesousa.adv.br',
   address: {
@@ -104,7 +104,7 @@ export default function Home() {
           </div>
 
           <div className="hero-visual" aria-label="Sócios do escritório Fôlha & Sousa">
-            <Image className="hero-office" src="/assets/hero-office.jpg" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 1050px) 100vw, 55vw" />
+            <Image className="hero-office" src="/assets/hero-office.webp" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 1050px) 100vw, 55vw" />
             <div className="hero-shade" />
             <Image className="hero-people" src="/assets/hero-people.webp" alt="Cosmélia Fôlha e Domingos Sávio de Sousa" width={615} height={659} sizes="(max-width: 720px) 90vw, (max-width: 1050px) 72vw, 40vw" priority />
             <div className="hero-caption">
@@ -134,7 +134,8 @@ export default function Home() {
             {practiceAreas.map((area) => (
               <article className="area-card weighted-reveal" key={area.number}>
                 <div className="area-image">
-                  <Image src={area.image} alt={area.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
+                  {/* Imagem ilustrativa: o título adjacente já nomeia a área (evita anúncio duplicado). */}
+                  <Image src={area.image} alt="" fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
                   <span>{area.number}</span>
                 </div>
                 <div className="area-copy">
@@ -216,7 +217,7 @@ export default function Home() {
 
         <section className="contact-section" id="contato">
           <div className="contact-photo weighted-reveal">
-            <Image src="/assets/hero-office.jpg" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" />
+            <Image src="/assets/hero-office.webp" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" />
           </div>
           <div className="contact-copy weighted-reveal">
             <p className="eyebrow">Contato</p>

@@ -29,7 +29,7 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `app/layout.tsx`: título, descrição e metadados gerais.
 - `public/assets/`: logos, fotos e imagens usadas no site.
 - `public/fonts/`: arquivos da fonte Source Serif 4.
-- `public/og.png`: imagem exibida ao compartilhar o site.
+- `public/og.jpg`: imagem 1200x630 exibida ao compartilhar o site.
 - `docs/`: relatório de testes e documentação de apoio.
 
 ## Executar localmente

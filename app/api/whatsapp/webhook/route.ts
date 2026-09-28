@@ -1,4 +1,4 @@
-import { verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
+import { verifyMetaSignature, verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,9 +35,21 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  const raw = await request.text();
+  if (!raw) {
+    return Response.json({ ok: false, reason: 'corpo JSON inválido' }, { status: 400 });
+  }
+
+  // Quando o segredo do app está configurado, a assinatura da Meta passa
+  // a ser obrigatória. Sem segredo, mantém o comportamento de teste inicial.
+  const appSecret = process.env.WHATSAPP_APP_SECRET;
+  if (appSecret && !verifyMetaSignature(raw, request.headers.get('x-hub-signature-256'), appSecret)) {
+    return Response.json({ ok: false, reason: 'assinatura inválida' }, { status: 403 });
+  }
+
   let body: unknown = null;
   try {
-    body = await request.json();
+    body = JSON.parse(raw);
   } catch {
     return Response.json({ ok: false, reason: 'corpo JSON inválido' }, { status: 400 });
   }

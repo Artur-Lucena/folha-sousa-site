@@ -8,6 +8,17 @@ export const metadata: Metadata = {
   title: 'Agendar Consulta | Fôlha & Sousa Advogados',
   description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line com o Fôlha & Sousa Advogados.',
   alternates: { canonical: '/agendar' },
+  openGraph: {
+    title: 'Agendar Consulta | Fôlha & Sousa Advogados',
+    description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line.',
+    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Agendar Consulta | Fôlha & Sousa Advogados',
+    description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line.',
+    images: ['https://folhaesousa.adv.br/og.jpg'],
+  },
 };
 
 type BookingPageProps = {

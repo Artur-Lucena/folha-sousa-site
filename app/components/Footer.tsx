@@ -16,6 +16,7 @@ export function Footer() {
           <Link href="/#escritorio">O escritório</Link>
           <Link href="/#equipe">Equipe</Link>
           <Link href="/agendar">Agendar consulta</Link>
+          <Link href="/perguntas-frequentes">Perguntas frequentes</Link>
         </div>
         <div>
           <p className="footer-label">Informações</p>

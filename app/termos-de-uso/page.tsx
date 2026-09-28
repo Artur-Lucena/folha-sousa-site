@@ -5,6 +5,17 @@ export const metadata: Metadata = {
   title: 'Termos de Uso | Fôlha & Sousa Advogados',
   description: 'Condições de uso do site Fôlha & Sousa Advogados.',
   alternates: { canonical: '/termos-de-uso' },
+  openGraph: {
+    title: 'Termos de Uso | Fôlha & Sousa Advogados',
+    description: 'Condições de uso do site Fôlha & Sousa Advogados.',
+    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Termos de Uso | Fôlha & Sousa Advogados',
+    description: 'Condições de uso do site Fôlha & Sousa Advogados.',
+    images: ['https://folhaesousa.adv.br/og.jpg'],
+  },
 };
 
 const sections: LegalSection[] = [

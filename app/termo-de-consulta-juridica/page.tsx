@@ -5,6 +5,17 @@ export const metadata: Metadata = {
   title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
   description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
   alternates: { canonical: '/termo-de-consulta-juridica' },
+  openGraph: {
+    title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
+    description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
+    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
+    description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
+    images: ['https://folhaesousa.adv.br/og.jpg'],
+  },
 };
 
 const sections: LegalSection[] = [

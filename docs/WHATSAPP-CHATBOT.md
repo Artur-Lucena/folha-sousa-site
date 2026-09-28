@@ -58,10 +58,16 @@ Resposta esperada nesta fase: `{"received":true}`.
 - Todo handoff para humano deve preservar contexto mínimo (área, formato, data preferida) e apagar o restante.
 - Registrar qualquer decisão de retenção em `tuco-ai-memory/decisions/`, nunca neste repo.
 
+## Pronto nesta fase (2026-09-28)
+
+- Validação de `X-Hub-Signature-256` com `WHATSAPP_APP_SECRET` (obrigatória quando o segredo está configurado; `verifyMetaSignature` em `app/lib/whatsapp.ts`).
+- Horário comercial em `isBusinessHours` (seg–sex, 9h–18h, Maceió) e mensagem fora de horário a partir de `CHATBOT_MENU.businessHours`.
+- Montador de botões interativos `buildInteractiveButtons` no contrato da Cloud API (máx. 3, títulos de 20 caracteres).
+- Testes de contrato em `tests/whatsapp.test.mjs` (assinatura, horário, botões).
+
 ## Próximo incremento (quando o escritório aprovar)
 
-- Validar `X-Hub-Signature-256` com `WHATSAPP_APP_SECRET`.
 - Implementar envio via Cloud API com fila e idempotência (`messageId`).
 - Reutilizar `areas`, `consultationPrices`, `formats`, `periods` e `professionals` de `booking.ts` como botões interativos do bot.
-- Adicionar testes de contrato do payload Meta em `tests/whatsapp.test.mjs`.
-- Definir horário de atendimento (seg–sex, 9h–18h, Maceió) e mensagem fora de horário a partir de `CHATBOT_MENU.businessHours`.
+- Adicionar testes de contrato do payload Meta completo.
+- Definir mensagem de feriados e handoff humano com contexto mínimo.

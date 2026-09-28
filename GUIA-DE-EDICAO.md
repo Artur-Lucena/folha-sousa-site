@@ -24,6 +24,7 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `tests/booking.test.mjs`: testes das regras de agendamento, sem enviar mensagens.
 - `tests/whatsapp.test.mjs`: testes dos links e da verificação do webhook, sem segredos.
 - `app/politicas-de-privacidade/`: política de privacidade.
+- `app/perguntas-frequentes/`: perguntas frequentes com dados estruturados FAQ.
 - `app/termo-de-consulta-juridica/`: termo da consulta.
 - `app/termos-de-uso/`: termos de uso.
 - `app/layout.tsx`: título, descrição e metadados gerais.

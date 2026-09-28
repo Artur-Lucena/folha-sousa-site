@@ -5,6 +5,17 @@ export const metadata: Metadata = {
   title: 'Política de Privacidade | Fôlha & Sousa Advogados',
   description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
   alternates: { canonical: '/politicas-de-privacidade' },
+  openGraph: {
+    title: 'Política de Privacidade | Fôlha & Sousa Advogados',
+    description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
+    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Política de Privacidade | Fôlha & Sousa Advogados',
+    description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
+    images: ['https://folhaesousa.adv.br/og.jpg'],
+  },
 };
 
 const sections: LegalSection[] = [

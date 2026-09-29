@@ -2,6 +2,14 @@
 
 Versão local em desenvolvimento. Não publicar nem apontar o domínio sem aprovação expressa.
 
+## Teste local rápido
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\testar-local.ps1
+```
+
+O script confere ferramentas, roda lint, tipos, testes e build, sobe o servidor em `http://127.0.0.1:3000`, verifica as rotas e abre o navegador. Detalhes de edição em `GUIA-DE-EDICAO.md`.
+
 ## Conteúdo implementado
 
 - página institucional completa;

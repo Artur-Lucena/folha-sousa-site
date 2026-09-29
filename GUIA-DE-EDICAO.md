@@ -35,6 +35,12 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 
 ## Executar localmente
 
+O caminho mais rápido é o script da raiz (valida tudo e abre o navegador):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\testar-local.ps1
+```
+
 É necessário ter Node.js 22 ou superior e o pnpm instalados.
 
 No terminal integrado do VS Code, dentro desta pasta:

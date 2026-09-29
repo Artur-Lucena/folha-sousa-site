@@ -2,8 +2,10 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import type { FocusEvent, MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
+import { Pressable } from './Pressable';
 
 const links = [
   ['Atuação', '/#atuacao'],
@@ -80,12 +82,12 @@ export function Header() {
         <nav className="desktop-nav" aria-label="Navegação principal">
           {links.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}
         </nav>
-        <Link className="header-cta" href="/agendar">Agendar consulta</Link>
+        <Pressable><Link className="header-cta" href="/agendar">Agendar consulta</Link></Pressable>
         <details className="mobile-menu" ref={mobileMenu} onBlur={closeAfterFocusLeaves} onToggle={syncMobileMenuState}>
-          <summary aria-expanded="false" aria-controls="mobile-nav">
+          <motion.summary aria-expanded="false" aria-controls="mobile-nav" whileTap={{ scale: 0.97 }}>
             <span>Menu</span>
             <span className="mobile-menu-icon" aria-hidden="true">+</span>
-          </summary>
+          </motion.summary>
           <nav id="mobile-nav" aria-label="Navegação para dispositivos móveis">
             {links.map(([label, href]) => <Link href={href} key={href} onClick={closeMobileMenu}>{label}</Link>)}
             <Link href="/agendar" onClick={closeMobileMenu}>Agendar consulta</Link>

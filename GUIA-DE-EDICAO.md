@@ -14,6 +14,10 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `app/page.tsx`: conteúdo e estrutura da página inicial.
 - `app/globals.css`: cores, tipografia, tamanhos, espaçamentos, animações e responsividade.
 - `app/components/Header.tsx`: cabeçalho e menus.
+- `app/components/MotionProvider.tsx`: política global de movimento (reduced-motion + transição editorial).
+- `app/components/Reveal.tsx`: revelação sob scroll (`Reveal`, `Stagger`, `StaggerItem`).
+- `app/components/Pressable.tsx`: micro-interação de pressão para CTAs.
+- `app/components/FaqAccordion.tsx`: sanfona animada das perguntas frequentes.
 - `app/components/Footer.tsx`: rodapé, redes sociais e botão do WhatsApp.
 - `app/agendar/`: página e formulário de agendamento.
 - `app/agendar/booking.ts`: opções, preços, validação e preparação da mensagem de agendamento.

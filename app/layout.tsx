@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { MotionProvider } from './components/MotionProvider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body>{children}</body>
+      <body><MotionProvider>{children}</MotionProvider></body>
     </html>
   );
 }

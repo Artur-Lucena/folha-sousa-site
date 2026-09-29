@@ -1,4 +1,5 @@
-import { verifyMetaSignature, verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
+import { verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
+import { verifyMetaSignature } from './signature';
 
 export const dynamic = 'force-dynamic';
 

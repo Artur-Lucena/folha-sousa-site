@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { LegalPage, type LegalSection } from '../components/LegalPage';
+import { FaqAccordion } from '../components/FaqAccordion';
 
 const OG_IMAGE = {
   url: 'https://folhaesousa.adv.br/og.jpg',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
 };
 
-const sections: LegalSection[] = [
+const sections: { title: string; paragraphs: string[] }[] = [
   {
     title: 'Quanto custa a consulta?',
     paragraphs: ['A consulta sem análise documental tem o valor de R$ 350,00. A consulta com análise documental tem o valor de R$ 500,00. O site não realiza cobrança: a contratação é confirmada pela equipe após verificação de disponibilidade.'],
@@ -85,9 +85,7 @@ export default function FaqPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
       />
-      <LegalPage
-        title="Perguntas Frequentes"
-        updated="28/09/2026"
+      <FaqAccordion
         intro="Respostas diretas sobre valores, agendamento, atendimento e proteção de dados. Para situações específicas, solicite uma consulta."
         sections={sections}
       />

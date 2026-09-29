@@ -6,13 +6,13 @@ import {
   buildWhatsAppLink,
   getDefaultWhatsAppLink,
   isBusinessHours,
-  verifyMetaSignature,
   verifyWebhookChallenge,
   parseIncomingText,
   WHATSAPP_BASE_URL,
   WHATSAPP_INTERNATIONAL_NUMBER,
   CHATBOT_MENU,
 } from '../app/lib/whatsapp.ts';
+import { verifyMetaSignature } from '../app/api/whatsapp/webhook/signature.ts';
 import { whatsappUrl } from '../app/agendar/booking.ts';
 
 test('booking.ts usa o mesmo número oficial da central WhatsApp', () => {

@@ -2,6 +2,8 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { Pressable } from './components/Pressable';
+import { Reveal, Stagger, StaggerItem } from './components/Reveal';
 import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_INTERNATIONAL_NUMBER } from './lib/whatsapp';
 
 const practiceAreas = [
@@ -87,23 +89,27 @@ export default function Home() {
         />
         <section className="hero" id="inicio">
           <div className="hero-copy">
-            <p className="eyebrow">Advocacia estratégica · Maceió e todo o Brasil</p>
-            <h1>Precisa de orientação jurídica segura?</h1>
-            <p className="hero-lead">
+            <Reveal as="p" className="eyebrow" delay={0}>Advocacia estratégica · Maceió e todo o Brasil</Reveal>
+            <Reveal as="h1" delay={0.08}>Precisa de orientação jurídica segura?</Reveal>
+            <Reveal as="p" className="hero-lead" delay={0.16}>
               Técnica, experiência e atendimento próximo para proteger pessoas,
               patrimônios e negócios com segurança.
-            </p>
-            <div className="hero-actions">
-              <a className="button button-gold" href="/agendar">Agendar consulta</a>
-              <a className="text-link" href="#atuacao">Conheça nossa atuação <span aria-hidden="true">↘</span></a>
-            </div>
-            <div className="hero-proof" aria-label="Diferenciais">
-              <span>Atendimento nacional e internacional</span>
-              <span>Presencial e on-line</span>
-            </div>
+            </Reveal>
+            <Reveal delay={0.24}>
+              <div className="hero-actions">
+                <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
+                <a className="text-link" href="#atuacao">Conheça nossa atuação <span aria-hidden="true">↘</span></a>
+              </div>
+            </Reveal>
+            <Reveal delay={0.32}>
+              <div className="hero-proof" aria-label="Diferenciais">
+                <span>Atendimento nacional e internacional</span>
+                <span>Presencial e on-line</span>
+              </div>
+            </Reveal>
           </div>
 
-          <div className="hero-visual" aria-label="Sócios do escritório Fôlha & Sousa">
+          <Reveal className="hero-visual" label="Sócios do escritório Fôlha & Sousa" y={0} delay={0.12}>
             <Image className="hero-office" src="/assets/hero-office.webp" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 1050px) 100vw, 55vw" />
             <div className="hero-shade" />
             <Image className="hero-people" src="/assets/hero-people.webp" alt="Cosmélia Fôlha e Domingos Sávio de Sousa" width={615} height={659} sizes="(max-width: 720px) 90vw, (max-width: 1050px) 72vw, 40vw" priority />
@@ -111,28 +117,28 @@ export default function Home() {
               <span>Fôlha & Sousa</span>
               <small>Advogados</small>
             </div>
-          </div>
+          </Reveal>
         </section>
 
-        <section className="manifesto section-shell weighted-reveal">
-          <p className="eyebrow">O Direito como instrumento de segurança</p>
-          <div>
+        <section className="manifesto section-shell">
+          <Reveal as="p" className="eyebrow">O Direito como instrumento de segurança</Reveal>
+          <Reveal delay={0.1}>
             <h2>Estratégia antes do conflito.<br />Presença quando ele acontece.</h2>
             <p>Oferecemos assessoria especializada, análise cuidadosa e soluções eficazes, unindo técnica, experiência, ética e transparência para orientar decisões seguras e sustentáveis.</p>
-          </div>
+          </Reveal>
         </section>
 
         <section className="practice-section" id="atuacao">
-          <div className="practice-title section-shell weighted-reveal">
-            <div>
+          <div className="practice-title section-shell">
+            <Reveal>
               <p className="eyebrow">Áreas de atuação</p>
               <h2>Conhecimento técnico.<br />Visão de longo prazo.</h2>
-            </div>
-            <p>Atuação consultiva e contenciosa, com soluções construídas para a realidade de cada cliente.</p>
+            </Reveal>
+            <Reveal as="p" delay={0.1}>Atuação consultiva e contenciosa, com soluções construídas para a realidade de cada cliente.</Reveal>
           </div>
-          <div className="practice-grid section-shell">
+          <Stagger className="practice-grid section-shell">
             {practiceAreas.map((area) => (
-              <article className="area-card weighted-reveal" key={area.number}>
+              <StaggerItem as="article" className="area-card" key={area.number}>
                 <div className="area-image">
                   {/* Imagem ilustrativa: o título adjacente já nomeia a área (evita anúncio duplicado). */}
                   <Image src={area.image} alt="" fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 33vw" />
@@ -142,16 +148,16 @@ export default function Home() {
                   <h3>{area.title}</h3>
                   <p>{area.description}</p>
                 </div>
-              </article>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </section>
 
         <section className="about-section" id="escritorio">
-          <div className="about-image weighted-reveal">
+          <Reveal className="about-image">
             <Image src="/assets/team.webp" alt="Equipe Fôlha & Sousa Advogados" fill sizes="(max-width: 1050px) 100vw, 50vw" />
-          </div>
-          <div className="about-copy weighted-reveal">
+          </Reveal>
+          <Reveal className="about-copy" delay={0.1}>
             <p className="eyebrow">O escritório</p>
             <h2>Uma advocacia moderna, segura e parceira.</h2>
             <p>Unimos técnica, experiência e visão de futuro para oferecer suporte jurídico completo, focado na resolução de conflitos, na estruturação patrimonial e na prevenção de riscos legais.</p>
@@ -161,28 +167,28 @@ export default function Home() {
               <li><span>02</span> Ética e transparência</li>
               <li><span>03</span> Resultados sustentáveis</li>
             </ul>
-          </div>
+          </Reveal>
         </section>
 
         <section className="values-section section-shell" aria-labelledby="values-heading">
-          <div className="values-intro weighted-reveal">
-            <p className="eyebrow">Nossa forma de atuar</p>
-            <h2 id="values-heading">Rigor técnico com escuta humana.</h2>
+          <div className="values-intro">
+            <Reveal as="p" className="eyebrow">Nossa forma de atuar</Reveal>
+            <Reveal delay={0.1}><h2 id="values-heading">Rigor técnico com escuta humana.</h2></Reveal>
           </div>
-          <div className="values-grid">
-            <article className="weighted-reveal"><b aria-hidden="true">I</b><span>Missão</span><p>Oferecer soluções jurídicas personalizadas e eficazes, com excelência técnica, compromisso, transparência e atendimento humanizado.</p></article>
-            <article className="weighted-reveal"><b aria-hidden="true">II</b><span>Visão</span><p>Ser referência em advocacia moderna e ética, unindo técnica e empatia para transformar desafios em resultados.</p></article>
-            <article className="weighted-reveal"><b aria-hidden="true">III</b><span>Valores</span><p>Integridade, responsabilidade, colaboração, inovação e busca constante por excelência em cada relação.</p></article>
-          </div>
+          <Stagger className="values-grid">
+            <StaggerItem as="article"><b aria-hidden="true">I</b><span>Missão</span><p>Oferecer soluções jurídicas personalizadas e eficazes, com excelência técnica, compromisso, transparência e atendimento humanizado.</p></StaggerItem>
+            <StaggerItem as="article"><b aria-hidden="true">II</b><span>Visão</span><p>Ser referência em advocacia moderna e ética, unindo técnica e empatia para transformar desafios em resultados.</p></StaggerItem>
+            <StaggerItem as="article"><b aria-hidden="true">III</b><span>Valores</span><p>Integridade, responsabilidade, colaboração, inovação e busca constante por excelência em cada relação.</p></StaggerItem>
+          </Stagger>
         </section>
 
         <section className="team-section section-shell" id="equipe">
-          <div className="team-heading weighted-reveal">
-            <p className="eyebrow">Quem conduz cada estratégia</p>
-            <h2>Experiência que se transforma em orientação clara.</h2>
+          <div className="team-heading">
+            <Reveal as="p" className="eyebrow">Quem conduz cada estratégia</Reveal>
+            <Reveal delay={0.1}><h2>Experiência que se transforma em orientação clara.</h2></Reveal>
           </div>
-          <div className="lawyer-grid">
-            <article className="lawyer-card weighted-reveal">
+          <Stagger className="lawyer-grid">
+            <StaggerItem as="article" className="lawyer-card">
               <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócia · Direito Civil e de Família</p>
@@ -191,8 +197,8 @@ export default function Home() {
                 <p>Sua trajetória inclui atuação em comissões da OAB/AL e conselhos estaduais, com liderança institucional e compromisso com a cidadania.</p>
                 <a href="/agendar?profissional=cosmelia">Agendar com Cosmélia ↗</a>
               </div>
-            </article>
-            <article className="lawyer-card lawyer-card-reverse weighted-reveal">
+            </StaggerItem>
+            <StaggerItem as="article" className="lawyer-card lawyer-card-reverse">
               <div className="lawyer-photo"><Image src="/assets/savio.webp" alt="Domingos Sávio de Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócio · Direito Civil e Tributário</p>
@@ -201,25 +207,25 @@ export default function Home() {
                 <p>Foi Analista Tributário do Ministério da Receita Federal, é professor de Direito e participa de iniciativas da OAB/AL e do Direito de Família em Alagoas.</p>
                 <a href="/agendar?profissional=savio">Agendar com Domingos Sávio ↗</a>
               </div>
-            </article>
-          </div>
+            </StaggerItem>
+          </Stagger>
         </section>
 
         <section className="reach-section">
           <Image className="reach-map" src="/assets/world-map.png" alt="" aria-hidden="true" width={1600} height={900} sizes="(max-width: 720px) 150vw, 72vw" />
-          <div className="reach-copy section-shell weighted-reveal">
+          <Reveal className="reach-copy section-shell">
             <p className="eyebrow">Atendimento sem fronteiras</p>
             <h2>Nacional e internacional.</h2>
             <p>Atuamos em todo o território nacional e assessoramos clientes que vivem, investem ou possuem interesses fora do país, considerando os aspectos documentais, culturais e jurídicos de cada contexto.</p>
-            <a className="button button-outline-light" href="/agendar">Falar com nossa equipe</a>
-          </div>
+            <Pressable><a className="button button-outline-light" href="/agendar">Falar com nossa equipe</a></Pressable>
+          </Reveal>
         </section>
 
         <section className="contact-section" id="contato">
-          <div className="contact-photo weighted-reveal">
+          <Reveal className="contact-photo">
             <Image src="/assets/hero-office.webp" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" />
-          </div>
-          <div className="contact-copy weighted-reveal">
+          </Reveal>
+          <Reveal className="contact-copy" delay={0.1}>
             <p className="eyebrow">Contato</p>
             <h2>Vamos conversar sobre o seu próximo passo.</h2>
             <div className="contact-row">
@@ -238,8 +244,8 @@ export default function Home() {
               <span>Horário</span>
               <p>Segunda a sexta, das 9h às 18h<br />Atendimento presencial ou on-line com agendamento.</p>
             </div>
-            <a className="button button-gold" href="/agendar">Agendar consulta</a>
-          </div>
+            <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
+          </Reveal>
         </section>
       </main>
       <Footer />

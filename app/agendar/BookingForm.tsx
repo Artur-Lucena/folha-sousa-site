@@ -2,6 +2,7 @@
 
 import type { FormEvent } from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { useState, useSyncExternalStore } from 'react';
 import { flushSync } from 'react-dom';
 import {
@@ -168,7 +169,14 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
           {errorFor('consentimento')}
           <div className="booking-total">
             <div><span>Valor da consulta</span><strong>{consultationPrices[consultation]}</strong></div>
-            <button className="button button-gold" type="submit" disabled={!ready}>Continuar no WhatsApp <span aria-hidden="true">↗</span></button>
+            <motion.button
+              className="button button-gold"
+              type="submit"
+              disabled={!ready}
+              whileHover={ready ? { scale: 1.03 } : undefined}
+              whileTap={ready ? { scale: 0.97 } : undefined}
+              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+            >Continuar no WhatsApp <span aria-hidden="true">↗</span></motion.button>
           </div>
           <p className="submit-status" role="status" aria-atomic="true">{submitStatus}</p>
           <p className="field-note">A consulta depende de confirmação da equipe. O site não realiza cobrança.</p>

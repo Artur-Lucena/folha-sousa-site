@@ -9,9 +9,11 @@
  * Segredos (token, phone number id, verify token) vivem apenas em
  * variáveis de ambiente no servidor — ver `.env.example` e
  * `docs/WHATSAPP-CHATBOT.md`.
+ *
+ * Este módulo é propositalmente livre de APIs do Node: ele é importado
+ * também por componentes cliente. Código exclusivo do servidor
+ * (ex.: HMAC da assinatura Meta) vive junto às rotas de API.
  */
-
-import { createHmac, timingSafeEqual } from 'node:crypto';
 
 export const WHATSAPP_DISPLAY_NUMBER = '(82) 99410-4373';
 export const WHATSAPP_INTERNATIONAL_NUMBER = '5582994104373';
@@ -86,23 +88,6 @@ export function parseIncomingText(body: unknown): IncomingWhatsAppMessage | null
   if (!from || !text) return null;
   const messageId = typeof record.messageId === 'string' ? record.messageId : undefined;
   return { from, text, messageId };
-}
-
-/**
- * Valida a assinatura `X-Hub-Signature-256` da Meta sobre o corpo bruto.
- * Sem segredo configurado ou sem cabeçalho, recusa (o chamador decide
- * se a verificação é obrigatória — ver a rota do webhook).
- */
-export function verifyMetaSignature(
-  rawBody: string,
-  signatureHeader: string | null,
-  appSecret: string | undefined,
-): boolean {
-  if (!appSecret || !signatureHeader) return false;
-  const expected = `sha256=${createHmac('sha256', appSecret).update(rawBody, 'utf8').digest('hex')}`;
-  const a = Buffer.from(expected, 'utf8');
-  const b = Buffer.from(signatureHeader, 'utf8');
-  return a.length === b.length && timingSafeEqual(a, b);
 }
 
 /** Segunda a sexta, 9h–18h no horário de Maceió (limites inclusivo/exclusivo). */

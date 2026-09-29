@@ -1,5 +1,6 @@
 import { Footer } from './Footer';
 import { Header } from './Header';
+import { Reveal } from './Reveal';
 
 export type LegalSection = { title: string; paragraphs: string[]; items?: string[] };
 
@@ -21,11 +22,11 @@ export function LegalPage({ title, updated, intro, sections }: { title: string; 
           <article>
             {intro && <p className="legal-intro">{intro}</p>}
             {sections.map((section, index) => (
-              <section id={`legal-${index}`} key={section.title}>
+              <Reveal as="section" id={`legal-${index}`} key={section.title}>
                 <h2>{section.title}</h2>
                 {section.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
                 {section.items && <ul>{section.items.map((item) => <li key={item}>{item}</li>)}</ul>}
-              </section>
+              </Reveal>
             ))}
           </article>
         </div>

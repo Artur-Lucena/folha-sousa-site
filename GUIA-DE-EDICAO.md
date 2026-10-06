@@ -16,6 +16,10 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `app/components/Header.tsx`: cabeçalho e menus.
 - `app/components/MotionProvider.tsx`: política global de movimento (reduced-motion + transição editorial).
 - `app/components/Reveal.tsx`: revelação sob scroll (`Reveal`, `Stagger`, `StaggerItem`).
+- `app/components/HeroTitle.tsx`: título do hero com revelação palavra por palavra.
+- `app/components/HeroVisual.tsx`: bloco visual do hero com parallax (desligado em reduced-motion).
+- `app/components/ClipReveal.tsx`: revelação de fotos por recorte.
+- `app/components/ArrowLink.tsx`: link editorial com seta viva.
 - `app/components/Pressable.tsx`: micro-interação de pressão para CTAs.
 - `app/components/FaqAccordion.tsx`: sanfona animada das perguntas frequentes.
 - `app/components/Footer.tsx`: rodapé, redes sociais e botão do WhatsApp.

@@ -1,7 +1,11 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { ArrowLink } from './components/ArrowLink';
+import { ClipReveal } from './components/ClipReveal';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { HeroTitle } from './components/HeroTitle';
+import { HeroVisual } from './components/HeroVisual';
 import { Pressable } from './components/Pressable';
 import { Reveal, Stagger, StaggerItem } from './components/Reveal';
 import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_INTERNATIONAL_NUMBER } from './lib/whatsapp';
@@ -91,7 +95,7 @@ export default function Home() {
         <section className="hero" id="inicio">
           <div className="hero-copy">
             <Reveal as="p" className="eyebrow" delay={0}>Advocacia estratégica · Maceió e todo o Brasil</Reveal>
-            <Reveal as="h1" delay={0.08}>Precisa de orientação jurídica segura?</Reveal>
+            <HeroTitle text="Precisa de orientação jurídica segura?" />
             <Reveal as="p" className="hero-lead" delay={0.16}>
               Técnica, experiência e atendimento próximo para proteger pessoas,
               patrimônios e negócios com segurança.
@@ -110,15 +114,7 @@ export default function Home() {
             </Reveal>
           </div>
 
-          <Reveal className="hero-visual" label="Sócios do escritório Fôlha & Sousa" y={0} delay={0.12}>
-            <Image className="hero-office" src="/assets/hero-office.webp" alt="Escritório Fôlha & Sousa" fill priority sizes="(max-width: 1050px) 100vw, 55vw" />
-            <div className="hero-shade" />
-            <Image className="hero-people" src="/assets/hero-people.webp" alt="Cosmélia Fôlha e Domingos Sávio de Sousa" width={615} height={659} sizes="(max-width: 720px) 90vw, (max-width: 1050px) 72vw, 40vw" priority />
-            <div className="hero-caption">
-              <span>Fôlha & Sousa</span>
-              <small>Advogados</small>
-            </div>
-          </Reveal>
+          <HeroVisual />
         </section>
 
         <div className="ticker" aria-hidden="true">
@@ -161,9 +157,9 @@ export default function Home() {
         </section>
 
         <section className="about-section" id="escritorio">
-          <Reveal className="about-image">
-            <Image src="/assets/team.webp" alt="Equipe Fôlha & Sousa Advogados" fill sizes="(max-width: 1050px) 100vw, 50vw" />
-          </Reveal>
+          <ClipReveal className="about-image">
+            <Image src="/assets/team.webp" alt="Equipe Fôlha & Sousa Advogados" fill sizes="(max-width: 1050px) 100vw, 50vw" quality={90} />
+          </ClipReveal>
           <Reveal className="about-copy" delay={0.1}>
             <p className="eyebrow">O escritório</p>
             <h2>Uma advocacia moderna, segura e parceira.</h2>
@@ -196,33 +192,33 @@ export default function Home() {
           </div>
           <Stagger className="lawyer-grid">
             <StaggerItem as="article" className="lawyer-card">
-              <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
+              <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 1050px) 100vw, 45vw" quality={90} /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócia · Especialista em Direito de Família</p>
                 <h3>Cosmélia Fôlha</h3>
                 <p>Com formação sólida pela UFAL e pós-graduação em Direito Civil e Processo Civil, alia excelência técnica e sensibilidade para lidar com questões delicadas que envolvem relações familiares e civis.</p>
                 <p>Sua trajetória inclui atuação em comissões da OAB/AL e conselhos estaduais, com liderança institucional e compromisso com a cidadania.</p>
-                <a href="/agendar?profissional=cosmelia">Agendar com Cosmélia ↗</a>
+                <ArrowLink href="/agendar?profissional=cosmelia">Agendar com Cosmélia ↗</ArrowLink>
               </div>
             </StaggerItem>
             <StaggerItem as="article" className="lawyer-card lawyer-card-reverse">
-              <div className="lawyer-photo"><Image src="/assets/savio.webp" alt="Domingos Sávio de Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
+              <div className="lawyer-photo"><Image src="/assets/savio.webp" alt="Domingos Sávio de Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" quality={90} /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Sócio · Direito Civil e Tributário</p>
                 <h3>Domingos Sávio<br />de Sousa</h3>
                 <p>Com sólida formação pela UFPE, atua com excelência nas áreas Cível e Tributária, com profundo conhecimento das normas fiscais e do funcionamento da Administração Pública.</p>
                 <p>Foi Analista Tributário do Ministério da Receita Federal, é professor de Direito e participa de iniciativas da OAB/AL e do Direito de Família em Alagoas.</p>
-                <a href="/agendar?profissional=savio">Agendar com Domingos Sávio ↗</a>
+                <ArrowLink href="/agendar?profissional=savio">Agendar com Domingos Sávio ↗</ArrowLink>
               </div>
             </StaggerItem>
             <StaggerItem as="article" className="lawyer-card">
-              <div className="lawyer-photo"><Image src="/assets/rubenicio.webp" alt="Rubenício Izidro" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
+              <div className="lawyer-photo"><Image src="/assets/rubenicio.webp" alt="Rubenício Izidro" fill sizes="(max-width: 1050px) 100vw, 45vw" quality={90} /></div>
               <div className="lawyer-info">
                 <p className="eyebrow">Advogado · Direito Trabalhista e Previdenciário</p>
                 <h3>Rubenício Izidro</h3>
                 <p>Atua nas áreas Trabalhista e Previdenciária, com orientação pautada pela técnica, segurança e atenção às particularidades de cada demanda.</p>
                 <p>Conduz cada caso com objetividade, responsabilidade e rigor técnico, no consultivo e no contencioso, com atendimento personalizado e ético.</p>
-                <a href="/agendar?profissional=rubenicio">Agendar com Rubenício ↗</a>
+                <ArrowLink href="/agendar?profissional=rubenicio">Agendar com Rubenício ↗</ArrowLink>
               </div>
             </StaggerItem>
           </Stagger>
@@ -239,9 +235,9 @@ export default function Home() {
         </section>
 
         <section className="contact-section" id="contato">
-          <Reveal className="contact-photo">
+          <ClipReveal className="contact-photo">
             <Image src="/assets/hero-office.webp" alt="Ambiente do escritório Fôlha & Sousa" fill sizes="(max-width: 1050px) 100vw, 45vw" />
-          </Reveal>
+          </ClipReveal>
           <Reveal className="contact-copy" delay={0.1}>
             <p className="eyebrow">Contato</p>
             <h2>Vamos conversar sobre o seu próximo passo.</h2>

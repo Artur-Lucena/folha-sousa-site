@@ -66,6 +66,14 @@ const sections: { title: string; paragraphs: string[] }[] = [
     title: 'Como meus dados pessoais são tratados?',
     paragraphs: ['Conforme a Política de Privacidade e a LGPD: os dados informados servem para contato, triagem inicial e agendamento. Para dúvidas ou solicitações sobre dados pessoais, utilize contato@folhaesousa.adv.br ou (82) 99410-4373.'],
   },
+  {
+    title: 'Vocês atendem em quais cidades?',
+    paragraphs: ['Presencialmente em Maceió/AL e em Paulo Afonso/BA, e on-line em todo o Brasil e para clientes no exterior. Consulte a seção de contato para endereços e mapas.'],
+  },
+  {
+    title: 'Como falo com a equipe antes de agendar?',
+    paragraphs: ['Pelo WhatsApp ou telefone (82) 99410-4373 e pelo e-mail contato@folhaesousa.adv.br, de segunda a sexta, das 9h às 18h.'],
+  },
 ];
 
 const faqData = {

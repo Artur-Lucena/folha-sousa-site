@@ -110,6 +110,7 @@ export default function Home() {
               <div className="hero-proof" aria-label="Diferenciais">
                 <span>Atendimento nacional e internacional</span>
                 <span>Presencial e on-line</span>
+                <span>Maceió · Paulo Afonso</span>
               </div>
             </Reveal>
           </div>
@@ -230,6 +231,11 @@ export default function Home() {
             <p className="eyebrow">Atendimento sem fronteiras</p>
             <h2>Nacional e internacional.</h2>
             <p>Atuamos em todo o território nacional e assessoramos clientes que vivem, investem ou possuem interesses fora do país, considerando os aspectos documentais, culturais e jurídicos de cada contexto.</p>
+            <ul className="reach-points">
+              <li>Presencial em Maceió e Paulo Afonso, com agendamento prévio</li>
+              <li>On-line para todo o Brasil e para clientes no exterior</li>
+              <li>Sigilo profissional em todas as etapas do atendimento</li>
+            </ul>
             <Pressable><a className="button button-outline-light" href="/agendar">Falar com nossa equipe</a></Pressable>
           </Reveal>
         </section>

@@ -55,6 +55,14 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
           </Stagger>
         </section>
         <BookingForm key={initialProfessional} initialProfessional={initialProfessional} minDate={getTodayInMaceio()} />
+        <Reveal className="booking-note">
+          <h2>O que acontece depois</h2>
+          <ol>
+            <li><strong>Confirmação humana.</strong> Nossa equipe responde pelo WhatsApp, confere a disponibilidade e confirma data, horário e valor.</li>
+            <li><strong>Sem cobrança pelo site.</strong> Nenhum pagamento é realizado aqui; a contratação segue pelos canais oficiais do escritório.</li>
+            <li><strong>Sigilo desde o início.</strong> Não envie documentos agora; eles só serão solicitados após orientação da equipe.</li>
+          </ol>
+        </Reveal>
       </main>
       <Footer />
     </>

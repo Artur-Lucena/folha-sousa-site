@@ -9,6 +9,7 @@ export function Footer() {
         <div className="footer-brand">
           <Image src="/assets/logo-white.webp" alt="Fôlha & Sousa Advogados" width={199} height={50} />
           <p>Soluções jurídicas estratégicas para pessoas e empresas.</p>
+          <p className="footer-address">Maceió · Av. Menino Marcelo, 9350, sala 104<br />Paulo Afonso · R. Marechal Floriano Peixoto, 549, sala 301</p>
         </div>
         <div>
           <p className="footer-label">Navegue</p>

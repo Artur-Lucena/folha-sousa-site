@@ -4,7 +4,7 @@ export const consultationPrices = {
 } as const;
 
 export const professionals = ['Primeiro profissional disponível', 'Cosmélia Fôlha', 'Domingos Sávio de Sousa', 'Rubenício Izidro'] as const;
-export const areas = ['Direito Civil e Direito das Sucessões', 'Direito Tributário', 'Direito Administrativo', 'Direito Empresarial', 'Direito Trabalhista', 'Direito Previdenciário', 'Direito Público', 'Orientação inicial'] as const;
+export const areas = ['Direito Civil e Direito das Sucessões', 'Direito Tributário', 'Direito Administrativo', 'Direito Empresarial', 'Direito Trabalhista', 'Direito Previdenciário', 'Direito Público', 'Orientação jurídica inicial'] as const;
 export const formats = ['On-line', 'Presencial em Maceió', 'Presencial em Paulo Afonso'] as const;
 export const periods = ['Manhã · 9h às 12h', 'Tarde · 13h às 18h', 'Primeiro horário disponível'] as const;
 // Mantido igual a WHATSAPP_BASE_URL em app/lib/whatsapp.ts (fonte canônica do número).

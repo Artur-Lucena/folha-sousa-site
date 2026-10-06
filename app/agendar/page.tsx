@@ -33,7 +33,9 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
     ? professionals[1]
     : professionalKey === 'savio'
       ? professionals[2]
-      : professionals[0];
+      : professionalKey === 'rubenicio'
+        ? professionals[3]
+        : professionals[0];
 
   return (
     <>

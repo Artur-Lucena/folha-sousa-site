@@ -51,7 +51,7 @@ const sections: LegalSection[] = [
   },
   {
     title: 'Contato',
-    paragraphs: ['Para dúvidas ou solicitações relacionadas a dados pessoais, entre em contato pelo e-mail contato@folhaesousa.adv.br ou pelo telefone (82) 99410-4373. Fôlha & Sousa Advogados — CNPJ 28.306.731/0001-89 — Av. Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 309, Serraria, Maceió/AL, CEP 57046-000.'],
+    paragraphs: ['Para dúvidas ou solicitações relacionadas a dados pessoais, entre em contato pelo e-mail contato@folhaesousa.adv.br ou pelo telefone (82) 99410-4373. Fôlha & Sousa Advogados — CNPJ 28.306.731/0001-89 — Av. Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 104, Serraria, Maceió/AL, CEP 57046-000.'],
   },
 ];
 

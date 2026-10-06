@@ -72,6 +72,19 @@ test('mensagem preserva acentos e caracteres reservados sem criar parâmetros ex
   assert.match(message, /R\$ 350,00/);
 });
 
+test('novas opções do site atual passam na validação', () => {
+  const data = validData({
+    area: 'Direito Previdenciário',
+    profissional: 'Rubenício Izidro',
+    formato: 'Presencial em Paulo Afonso',
+  });
+  assert.deepEqual(validateBooking(data, '2026-09-09'), {});
+  const message = new URL(buildBookingUrl(data, '2026-09-09')).searchParams.get('text');
+  assert.match(message, /Rubenício Izidro/);
+  assert.match(message, /Presencial em Paulo Afonso/);
+  assert.match(message, /Direito Previdenciário/);
+});
+
 test('consulta com documentos usa o valor correto em sua mensagem', () => {
   const url = new URL(buildBookingUrl(validData({ consulta: 'Consulta com análise documental' }), '2026-09-09'));
   assert.match(url.searchParams.get('text'), /Consulta com análise documental — R\$ 500,00/);

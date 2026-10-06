@@ -59,7 +59,7 @@ const legalServiceData = {
   email: 'contato@folhaesousa.adv.br',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Avenida Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 309',
+    streetAddress: 'Avenida Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 104',
     addressLocality: 'Maceió',
     addressRegion: 'AL',
     postalCode: '57046-000',
@@ -75,6 +75,7 @@ const legalServiceData = {
   employee: [
     { '@type': 'Attorney', name: 'Cosmélia Fôlha', jobTitle: 'Sócia · Direito Civil e de Família' },
     { '@type': 'Attorney', name: 'Domingos Sávio de Sousa', jobTitle: 'Sócio · Direito Civil e Tributário' },
+    { '@type': 'Attorney', name: 'Rubenício Izidro', jobTitle: 'Advogado · Direito Trabalhista e Previdenciário' },
   ],
 };
 
@@ -119,6 +120,12 @@ export default function Home() {
             </div>
           </Reveal>
         </section>
+
+        <div className="ticker" aria-hidden="true">
+          <div className="ticker-track">
+            {Array.from({ length: 12 }).map((_, i) => <span key={i}>Fôlha &amp; Sousa Advogados</span>)}
+          </div>
+        </div>
 
         <section className="manifesto section-shell">
           <Reveal as="p" className="eyebrow">O Direito como instrumento de segurança</Reveal>
@@ -208,6 +215,16 @@ export default function Home() {
                 <a href="/agendar?profissional=savio">Agendar com Domingos Sávio ↗</a>
               </div>
             </StaggerItem>
+            <StaggerItem as="article" className="lawyer-card">
+              <div className="lawyer-photo"><Image src="/assets/rubenicio.webp" alt="Rubenício Izidro" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
+              <div className="lawyer-info">
+                <p className="eyebrow">Advogado · Direito Trabalhista e Previdenciário</p>
+                <h3>Rubenício Izidro</h3>
+                <p>Atua nas áreas Trabalhista e Previdenciária, com orientação pautada pela técnica, segurança e atenção às particularidades de cada demanda.</p>
+                <p>Conduz cada caso com objetividade, responsabilidade e rigor técnico, no consultivo e no contencioso, com atendimento personalizado e ético.</p>
+                <a href="/agendar?profissional=rubenicio">Agendar com Rubenício ↗</a>
+              </div>
+            </StaggerItem>
           </Stagger>
         </section>
 
@@ -228,9 +245,17 @@ export default function Home() {
           <Reveal className="contact-copy" delay={0.1}>
             <p className="eyebrow">Contato</p>
             <h2>Vamos conversar sobre o seu próximo passo.</h2>
-            <div className="contact-row">
-              <span>Endereço</span>
-              <a href="https://maps.app.goo.gl/4PRsv8cXWust6KXk6" target="_blank" rel="noopener noreferrer">Av. Menino Marcelo, 9350<br />Empresarial Humberto Lobo, sala 309<br />Serraria · Maceió/AL · 57046-000 ↗</a>
+            <div className="unit-grid">
+              <div className="unit-card">
+                <div className="unit-photo"><Image src="/assets/fachada-maceio.webp" alt="Fachada do Empresarial Humberto Lobo, em Maceió" fill sizes="(max-width: 1050px) 100vw, 25vw" /></div>
+                <p className="unit-city">Maceió · AL</p>
+                <a href="https://maps.app.goo.gl/4PRsv8cXWust6KXk6" target="_blank" rel="noopener noreferrer">Av. Menino Marcelo, 9350<br />Empresarial Humberto Lobo, sala 104<br />Serraria · CEP 57046-000 ↗</a>
+              </div>
+              <div className="unit-card">
+                <div className="unit-photo"><Image src="/assets/fachada-paulo-afonso.webp" alt="Fachada do Empresarial Cliomel, em Paulo Afonso" fill sizes="(max-width: 1050px) 100vw, 25vw" /></div>
+                <p className="unit-city">Paulo Afonso · BA</p>
+                <a href="https://share.google/FfHzEWqiCcEHMclkE" target="_blank" rel="noopener noreferrer">Rua Marechal Floriano Peixoto, 549<br />Empresarial Cliomel, sala 301<br />Centro · CEP 48601-210 ↗</a>
+              </div>
             </div>
             <div className="contact-row">
               <span>Telefone</span>

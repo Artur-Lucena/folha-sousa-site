@@ -56,7 +56,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   },
   {
     title: 'Quais são as áreas de atuação?',
-    paragraphs: ['Direito Tributário, Direito Civil e Sucessões, Direito Administrativo, Direito Empresarial, Direito Trabalhista e Direito Público, com atuação consultiva e contenciosa.'],
+    paragraphs: ['Direito Tributário, Direito Civil e Direito das Sucessões, Direito Administrativo, Direito Empresarial, Direito Trabalhista e Direito Público, com atuação consultiva e contenciosa.'],
   },
   {
     title: 'O resultado do meu caso é garantido?',

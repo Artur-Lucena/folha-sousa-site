@@ -21,7 +21,7 @@ export function Footer() {
         <div>
           <p className="footer-label">Informações</p>
           <Link href="/politicas-de-privacidade">Política de privacidade</Link>
-          <Link href="/termo-de-consulta-juridica">Termo de consulta</Link>
+          <Link href="/termo-de-consulta-juridica">Termo de consulta jurídica</Link>
           <Link href="/termos-de-uso">Termos de uso</Link>
         </div>
         <div>

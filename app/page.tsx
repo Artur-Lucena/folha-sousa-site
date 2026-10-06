@@ -11,37 +11,37 @@ const practiceAreas = [
     number: '01',
     title: 'Direito Tributário',
     image: '/assets/tax.webp',
-    description: 'Planejamento, consultoria, defesa em autos de infração e execuções fiscais, recuperação de créditos e atuação administrativa ou judicial nas esferas municipal, estadual e federal.',
+    description: 'Atuação na análise e planejamento tributário, consultoria para pessoas físicas e jurídicas, defesa em autos de infração e execuções fiscais, além da recuperação de créditos tributários. Suporte completo em questões administrativas e judiciais nas esferas municipal, estadual e federal.',
   },
   {
     number: '02',
-    title: 'Direito Civil e Sucessões',
+    title: 'Direito Civil e Direito das Sucessões',
     image: '/assets/civil.webp',
-    description: 'Contratos, responsabilidade civil, relações de consumo, família, sucessões, direitos reais e obrigações para pessoas físicas e jurídicas.',
+    description: 'Atuação abrangendo relações entre pessoas físicas e jurídicas, negócios jurídicos, direitos reais e obrigações, contratos, responsabilidade civil, direito do consumidor, ações de família, dentre outros.',
   },
   {
     number: '03',
     title: 'Direito Administrativo',
     image: '/assets/administrative.webp',
-    description: 'Licitações, contratos com o Poder Público, servidores, concursos e representação em inquéritos e processos administrativos ou judiciais.',
+    description: 'Assessoria e consultoria jurídica, incluindo licitações, contratos com o Poder Público, servidores e concursos públicos, além de representar os clientes em inquéritos e processos administrativos e judiciais, contenciosos ou não, nos âmbitos federal, estadual ou municipal.',
   },
   {
     number: '04',
     title: 'Direito Empresarial',
     image: '/assets/business.webp',
-    description: 'Constituição e estruturação de empresas, contratos, conflitos societários, proteção de ativos e suporte em fusões, aquisições e reestruturações.',
+    description: 'Assessoria jurídica na constituição e estruturação de empresas, elaboração e análise de contratos empresariais, resolução de conflitos societários, proteção de ativos e marcas, além de suporte jurídico em processos de fusões, aquisições e reestruturações empresariais.',
   },
   {
     number: '05',
     title: 'Direito Trabalhista',
     image: '/assets/labor.webp',
-    description: 'Demandas consultivas e contenciosas, direitos individuais e coletivos, reestruturação de passivos e negociações judiciais ou extrajudiciais.',
+    description: 'Atendimento de demandas contenciosas e consultivas, na área dos direitos individuais e coletivos, na defesa dos interesses de empregados e entregadores, na reestruturação de passivos trabalhistas e negociações no âmbito extrajudicial e judicial.',
   },
   {
     number: '06',
     title: 'Direito Público',
     image: '/assets/public-law.webp',
-    description: 'Consultoria a agentes políticos, órgãos legislativos e instituições públicas, com assessoria parlamentar e análise de proposições e projetos de lei.',
+    description: 'Consultoria jurídica especializada para agentes políticos, órgãos legislativos e instituições públicas, com atuação em assessoria parlamentar, análise de proposições legislativas, projetos de lei, e interface estratégica entre os Poderes.',
   },
 ];
 
@@ -73,7 +73,7 @@ const legalServiceData = {
     closes: '18:00',
   }],
   employee: [
-    { '@type': 'Attorney', name: 'Cosmélia Fôlha', jobTitle: 'Sócia · Direito Civil e de Família' },
+    { '@type': 'Attorney', name: 'Cosmélia Fôlha', jobTitle: 'Sócia · Especialista em Direito de Família' },
     { '@type': 'Attorney', name: 'Domingos Sávio de Sousa', jobTitle: 'Sócio · Direito Civil e Tributário' },
     { '@type': 'Attorney', name: 'Rubenício Izidro', jobTitle: 'Advogado · Direito Trabalhista e Previdenciário' },
   ],
@@ -167,12 +167,12 @@ export default function Home() {
           <Reveal className="about-copy" delay={0.1}>
             <p className="eyebrow">O escritório</p>
             <h2>Uma advocacia moderna, segura e parceira.</h2>
-            <p>Unimos técnica, experiência e visão de futuro para oferecer suporte jurídico completo, focado na resolução de conflitos, na estruturação patrimonial e na prevenção de riscos legais.</p>
-            <p>Atuamos com pessoas físicas e jurídicas para transformar o Direito em um instrumento de proteção, crescimento e segurança.</p>
+            <p>Unimos técnica, experiência e visão de futuro para oferecer um suporte jurídico completo, focado na resolução de conflitos, na estruturação patrimonial e na prevenção de riscos legais.</p>
+            <p>Atuamos com pessoas físicas e jurídicas com um propósito claro: transformar o Direito em um instrumento de proteção, crescimento e segurança. Oferecemos soluções sólidas, personalizadas e com visão de longo prazo, ajudando nossos clientes a tomar decisões estratégicas com confiança.</p>
             <ul className="pillars">
               <li><span>01</span> Excelência técnica</li>
               <li><span>02</span> Ética e transparência</li>
-              <li><span>03</span> Resultados sustentáveis</li>
+              <li><span>03</span> Compromisso com resultados sustentáveis</li>
             </ul>
           </Reveal>
         </section>
@@ -183,9 +183,9 @@ export default function Home() {
             <Reveal delay={0.1}><h2 id="values-heading">Rigor técnico com escuta humana.</h2></Reveal>
           </div>
           <Stagger className="values-grid">
-            <StaggerItem as="article"><b aria-hidden="true">I</b><span>Missão</span><p>Oferecer soluções jurídicas personalizadas e eficazes, com excelência técnica, compromisso, transparência e atendimento humanizado.</p></StaggerItem>
-            <StaggerItem as="article"><b aria-hidden="true">II</b><span>Visão</span><p>Ser referência em advocacia moderna e ética, unindo técnica e empatia para transformar desafios em resultados.</p></StaggerItem>
-            <StaggerItem as="article"><b aria-hidden="true">III</b><span>Valores</span><p>Integridade, responsabilidade, colaboração, inovação e busca constante por excelência em cada relação.</p></StaggerItem>
+            <StaggerItem as="article"><b aria-hidden="true">I</b><span>Missão</span><p>Oferecer soluções jurídicas personalizadas e eficazes, com excelência técnica e atendimento humanizado. Atuamos com compromisso e transparência, garantindo segurança e confiança em cada decisão.</p></StaggerItem>
+            <StaggerItem as="article"><b aria-hidden="true">II</b><span>Visão</span><p>Ser referência em advocacia moderna e ética, unindo técnica e empatia para transformar desafios em resultados. Buscamos promover o crescimento e a proteção de pessoas e empresas.</p></StaggerItem>
+            <StaggerItem as="article"><b aria-hidden="true">III</b><span>Valores</span><p>Atuamos com integridade, compromisso, empatia e inovação. Nossa conduta reflete responsabilidade, colaboração e busca constante por excelência.</p></StaggerItem>
           </Stagger>
         </section>
 
@@ -198,9 +198,9 @@ export default function Home() {
             <StaggerItem as="article" className="lawyer-card">
               <div className="lawyer-photo"><Image src="/assets/cosmelia.webp" alt="Cosmélia Fôlha" fill sizes="(max-width: 1050px) 100vw, 45vw" /></div>
               <div className="lawyer-info">
-                <p className="eyebrow">Sócia · Direito Civil e de Família</p>
+                <p className="eyebrow">Sócia · Especialista em Direito de Família</p>
                 <h3>Cosmélia Fôlha</h3>
-                <p>Graduada pela UFAL e pós-graduada em Direito Civil e Processo Civil, alia excelência técnica e sensibilidade na condução de questões familiares e civis.</p>
+                <p>Com formação sólida pela UFAL e pós-graduação em Direito Civil e Processo Civil, alia excelência técnica e sensibilidade para lidar com questões delicadas que envolvem relações familiares e civis.</p>
                 <p>Sua trajetória inclui atuação em comissões da OAB/AL e conselhos estaduais, com liderança institucional e compromisso com a cidadania.</p>
                 <a href="/agendar?profissional=cosmelia">Agendar com Cosmélia ↗</a>
               </div>
@@ -210,7 +210,7 @@ export default function Home() {
               <div className="lawyer-info">
                 <p className="eyebrow">Sócio · Direito Civil e Tributário</p>
                 <h3>Domingos Sávio<br />de Sousa</h3>
-                <p>Graduado pela UFPE, possui sólida experiência nas áreas Cível e Tributária e profundo conhecimento das normas fiscais e do funcionamento da Administração Pública.</p>
+                <p>Com sólida formação pela UFPE, atua com excelência nas áreas Cível e Tributária, com profundo conhecimento das normas fiscais e do funcionamento da Administração Pública.</p>
                 <p>Foi Analista Tributário do Ministério da Receita Federal, é professor de Direito e participa de iniciativas da OAB/AL e do Direito de Família em Alagoas.</p>
                 <a href="/agendar?profissional=savio">Agendar com Domingos Sávio ↗</a>
               </div>
@@ -267,7 +267,7 @@ export default function Home() {
             </div>
             <div className="contact-row">
               <span>Horário</span>
-              <p>Segunda a sexta, das 9h às 18h<br />Atendimento presencial ou on-line com agendamento.</p>
+              <p>9h às 18h, de segunda a sexta-feira<br />Atendimento presencial ou on-line com agendamento prévio.</p>
             </div>
             <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
           </Reveal>

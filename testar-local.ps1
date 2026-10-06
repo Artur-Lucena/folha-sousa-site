@@ -117,6 +117,9 @@ if (-not $okWebhook) { $falhas++ }
 $c422 = curl.exe -s -o NUL -w '%{http_code}' --max-time 10 -X POST -H 'content-type: application/json' --data-binary "@$whRuim" "http://127.0.0.1:$Porta/api/whatsapp/webhook"
 Write-Host ("POST /api/whatsapp/webhook (inválido) -> {0} {1}" -f $c422, $(if ($c422 -eq '422') { 'OK' } else { 'ERRO' }))
 if ($c422 -ne '422') { $falhas++ }
+$c503 = curl.exe -s -o NUL -w '%{http_code}' --max-time 10 "http://127.0.0.1:$Porta/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=x&hub.challenge=1234"
+Write-Host ("GET /api/whatsapp/webhook (sem segredo -> 503) -> {0} {1}" -f $c503, $(if ($c503 -eq '503') { 'OK' } else { 'ERRO' }))
+if ($c503 -ne '503') { $falhas++ }
 Remove-Item -LiteralPath $whOk, $whRuim -ErrorAction SilentlyContinue
 
 if ($falhas -gt 0) {

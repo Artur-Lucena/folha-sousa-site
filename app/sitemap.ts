@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://folhaesousa.adv.br';
-  const institutionalLastModified = new Date('2026-08-26T00:00:00-03:00');
-  const bookingLastModified = new Date('2026-09-10T00:00:00-03:00');
-  const faqLastModified = new Date('2026-09-28T00:00:00-03:00');
+  const institutionalLastModified = new Date('2026-10-14T00:00:00-03:00');
+  const bookingLastModified = new Date('2026-10-14T00:00:00-03:00');
+  const faqLastModified = new Date('2026-10-14T00:00:00-03:00');
 
   return [
     { url: `${baseUrl}/`, lastModified: institutionalLastModified, changeFrequency: 'monthly', priority: 1 },

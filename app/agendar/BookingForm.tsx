@@ -15,7 +15,12 @@ const subscribe = () => () => {};
 const clientReady = () => true;
 const serverReady = () => false;
 
-export function BookingForm({ initialProfessional, minDate }: { initialProfessional: string; minDate: string }) {
+export function BookingForm({ initialProfessional, initialArea, initialFormat, minDate }: {
+  initialProfessional: string;
+  initialArea: string;
+  initialFormat: string;
+  minDate: string;
+}) {
   const ready = useSyncExternalStore(subscribe, clientReady, serverReady);
   const [consultation, setConsultation] = useState<keyof typeof consultationPrices>('Consulta sem análise documental');
   const [errors, setErrors] = useState<BookingErrors>({});
@@ -81,7 +86,7 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
           <div className="field-grid">
             <label>
               Área de interesse
-              <select name="area" required defaultValue="" aria-invalid={!!errors.area} aria-describedby={describedBy('area')}>
+              <select name="area" required defaultValue={initialArea} aria-invalid={!!errors.area} aria-describedby={describedBy('area')}>
                 <option value="" disabled>Selecione uma área</option>
                 {areas.map((area) => <option key={area}>{area}</option>)}
               </select>
@@ -103,7 +108,7 @@ export function BookingForm({ initialProfessional, minDate }: { initialProfessio
             </label>
             <label>
               Formato
-              <select name="formato" required aria-invalid={!!errors.formato} aria-describedby={describedBy('formato')}>
+              <select name="formato" required defaultValue={initialFormat} aria-invalid={!!errors.formato} aria-describedby={describedBy('formato')}>
                 {formats.map((format) => <option key={format}>{format}</option>)}
               </select>
               {errorFor('formato')}

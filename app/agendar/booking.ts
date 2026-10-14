@@ -7,6 +7,29 @@ export const professionals = ['Primeiro profissional disponível', 'Cosmélia F�
 export const areas = ['Direito Civil e Direito das Sucessões', 'Direito Tributário', 'Direito Administrativo', 'Direito Empresarial', 'Direito Trabalhista', 'Direito Previdenciário', 'Direito Público', 'Orientação jurídica inicial'] as const;
 export const formats = ['On-line', 'Presencial em Maceió', 'Presencial em Paulo Afonso'] as const;
 export const periods = ['Manhã · 9h às 12h', 'Tarde · 13h às 18h', 'Primeiro horário disponível'] as const;
+
+type BookingQueryValue = string | string[] | undefined;
+
+/** Preserve the visitor's choice while accepting only supported query values. */
+export function resolveBookingPreferences(query: {
+  area?: BookingQueryValue;
+  profissional?: BookingQueryValue;
+  unidade?: BookingQueryValue;
+}) {
+  const first = (value: BookingQueryValue) => Array.isArray(value) ? value[0] : value;
+  const areaKeys = ['civil', 'tributario', 'administrativo', 'empresarial', 'trabalhista', 'previdenciario', 'publico', 'orientacao'];
+  const professionalKeys = ['disponivel', 'cosmelia', 'savio', 'rubenicio'];
+  const formatKeys = ['online', 'maceio', 'paulo-afonso'];
+  const areaIndex = areaKeys.indexOf(first(query.area) ?? '');
+  const professionalIndex = professionalKeys.indexOf(first(query.profissional) ?? '');
+  const formatIndex = formatKeys.indexOf(first(query.unidade) ?? '');
+
+  return {
+    initialArea: areaIndex < 0 ? '' : areas[areaIndex],
+    initialProfessional: professionals[professionalIndex < 0 ? 0 : professionalIndex],
+    initialFormat: formats[formatIndex < 0 ? 0 : formatIndex],
+  };
+}
 // Mantido igual a WHATSAPP_BASE_URL em app/lib/whatsapp.ts (fonte canônica do número).
 // A igualdade é verificada por tests/whatsapp.test.mjs; sem import direto para
 // que este módulo continue carregável pelo runner de testes do Node.

@@ -106,6 +106,24 @@ $c404 = curl.exe -s -o NUL -w '%{http_code}' --max-time 10 "http://127.0.0.1:$Po
 Write-Host ('/pagina-inexistente-xyz -> {0} {1}' -f $c404, $(if ($c404 -eq '404') { 'OK' } else { 'ERRO' }))
 if ($c404 -ne '404') { $falhas++ }
 
+Passo 'Agendamento por área e unidade'
+$homeHtml = curl.exe -s --max-time 10 "http://127.0.0.1:$Porta/" | Out-String
+$okAreas = ([regex]::Matches($homeHtml, 'agendar\?area=').Count -ge 6)
+$okUnidades = ([regex]::Matches($homeHtml, 'agendar\?unidade=').Count -ge 2)
+$okDept = $homeHtml.Contains('"department"') -and $homeHtml.Contains('unidade-maceio') -and $homeHtml.Contains('unidade-paulo-afonso')
+$okHome = $okAreas -and $okUnidades -and $okDept
+Write-Host ("home (6 áreas, 2 unidades, department) -> {0}" -f $(if ($okHome) { 'OK' } else { 'ERRO' }))
+if (-not $okHome) { $falhas++ }
+$agUrl = "http://127.0.0.1:$Porta/agendar?area=tributario&unidade=paulo-afonso&profissional=savio"
+$agHtml = curl.exe -s --max-time 10 $agUrl | Out-String
+$okAg = $agHtml.Contains('<option selected="">Direito Tribut') -and $agHtml.Contains('Domingos S') -and $agHtml.Contains('<option selected="">Presencial em Paulo Afonso</option>')
+Write-Host ("agendar (área+unidade+profissional preservados) -> {0}" -f $(if ($okAg) { 'OK' } else { 'ERRO' }))
+if (-not $okAg) { $falhas++ }
+$badHtml = curl.exe -s --max-time 10 "http://127.0.0.1:$Porta/agendar?area=__proto__&unidade=outra&profissional=outro" | Out-String
+$okBad = $badHtml.Contains('<option value="" disabled="" selected="">Selecione uma')
+Write-Host ("agendar (parâmetros inválidos voltam ao padrão) -> {0}" -f $(if ($okBad) { 'OK' } else { 'ERRO' }))
+if (-not $okBad) { $falhas++ }
+
 $whOk = Join-Path $env:TEMP 'wh-ok.json'
 $whRuim = Join-Path $env:TEMP 'wh-ruim.json'
 [System.IO.File]::WriteAllText($whOk, '{"from":"5582999990000","text":"Agendar consulta"}')

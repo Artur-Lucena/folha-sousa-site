@@ -9,41 +9,54 @@ import { HeroVisual } from './components/HeroVisual';
 import { Pressable } from './components/Pressable';
 import { Reveal, Stagger, StaggerItem } from './components/Reveal';
 import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_INTERNATIONAL_NUMBER } from './lib/whatsapp';
+import { offices } from './lib/offices';
 
 const practiceAreas = [
   {
     number: '01',
+    slug: 'tributario',
     title: 'Direito Tributário',
+    summary: 'Planejamento tributário, defesa fiscal e recuperação de créditos para pessoas e empresas.',
     image: '/assets/tax.webp',
     description: 'Atuação na análise e planejamento tributário, consultoria para pessoas físicas e jurídicas, defesa em autos de infração e execuções fiscais, além da recuperação de créditos tributários. Suporte completo em questões administrativas e judiciais nas esferas municipal, estadual e federal.',
   },
   {
     number: '02',
+    slug: 'civil',
     title: 'Direito Civil e Direito das Sucessões',
+    summary: 'Contratos, relações familiares, patrimônio e sucessões com orientação próxima e cuidadosa.',
     image: '/assets/civil.webp',
     description: 'Atuação abrangendo relações entre pessoas físicas e jurídicas, negócios jurídicos, direitos reais e obrigações, contratos, responsabilidade civil, direito do consumidor, ações de família, dentre outros.',
   },
   {
     number: '03',
+    slug: 'administrativo',
     title: 'Direito Administrativo',
+    summary: 'Assessoria em licitações, contratos públicos e demandas de servidores e concursos.',
     image: '/assets/administrative.webp',
     description: 'Assessoria e consultoria jurídica, incluindo licitações, contratos com o Poder Público, servidores e concursos públicos, além de representar os clientes em inquéritos e processos administrativos e judiciais, contenciosos ou não, nos âmbitos federal, estadual ou municipal.',
   },
   {
     number: '04',
+    slug: 'empresarial',
     title: 'Direito Empresarial',
+    summary: 'Estruturação de empresas, contratos e conflitos societários com visão de longo prazo.',
     image: '/assets/business.webp',
     description: 'Assessoria jurídica na constituição e estruturação de empresas, elaboração e análise de contratos empresariais, resolução de conflitos societários, proteção de ativos e marcas, além de suporte jurídico em processos de fusões, aquisições e reestruturações empresariais.',
   },
   {
     number: '05',
+    slug: 'trabalhista',
     title: 'Direito Trabalhista',
+    summary: 'Consultoria, negociação e atuação em conflitos individuais e coletivos de trabalho.',
     image: '/assets/labor.webp',
     description: 'Atendimento de demandas contenciosas e consultivas, na área dos direitos individuais e coletivos, na defesa dos interesses de empregados e entregadores, na reestruturação de passivos trabalhistas e negociações no âmbito extrajudicial e judicial.',
   },
   {
     number: '06',
+    slug: 'publico',
     title: 'Direito Público',
+    summary: 'Assessoria a agentes políticos, órgãos legislativos e instituições públicas.',
     image: '/assets/public-law.webp',
     description: 'Consultoria jurídica especializada para agentes políticos, órgãos legislativos e instituições públicas, com atuação em assessoria parlamentar, análise de proposições legislativas, projetos de lei, e interface estratégica entre os Poderes.',
   },
@@ -59,7 +72,7 @@ const legalServiceData = {
   name: 'Fôlha & Sousa Advogados',
   url: 'https://folhaesousa.adv.br/',
   image: 'https://folhaesousa.adv.br/og.jpg',
-  telephone: `+55 ${WHATSAPP_DISPLAY_NUMBER}`,
+  telephone: `+${WHATSAPP_INTERNATIONAL_NUMBER}`,
   email: 'contato@folhaesousa.adv.br',
   address: {
     '@type': 'PostalAddress',
@@ -70,6 +83,21 @@ const legalServiceData = {
     addressCountry: 'BR',
   },
   areaServed: ['Brasil', 'Atendimento internacional'],
+  knowsAbout: practiceAreas.map((area) => area.title),
+  department: offices.map((office) => ({
+    '@type': 'LegalService',
+    '@id': `https://folhaesousa.adv.br/#unidade-${office.id}`,
+    name: `Fôlha & Sousa Advogados — ${office.city}`,
+    telephone: `+${WHATSAPP_INTERNATIONAL_NUMBER}`,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: `${office.street}, ${office.building}, ${office.neighborhood}`,
+      addressLocality: office.city,
+      addressRegion: office.state,
+      postalCode: office.postalCode,
+      addressCountry: 'BR',
+    },
+  })),
   openingHoursSpecification: [{
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
@@ -150,7 +178,12 @@ export default function Home() {
                 </div>
                 <div className="area-copy">
                   <h3>{area.title}</h3>
-                  <p>{area.description}</p>
+                  <p>{area.summary}</p>
+                  <details className="area-details">
+                    <summary>Como atuamos<span className="sr-only"> em {area.title}</span></summary>
+                    <p>{area.description}</p>
+                  </details>
+                  <ArrowLink href={`/agendar?area=${area.slug}`}>Consultar sobre esta área ↗</ArrowLink>
                 </div>
               </StaggerItem>
             ))}
@@ -248,16 +281,17 @@ export default function Home() {
             <p className="eyebrow">Contato</p>
             <h2>Vamos conversar sobre o seu próximo passo.</h2>
             <div className="unit-grid">
-              <div className="unit-card">
-                <div className="unit-photo"><Image src="/assets/fachada-maceio.webp" alt="Fachada do Empresarial Humberto Lobo, em Maceió" fill sizes="(max-width: 1050px) 100vw, 25vw" /></div>
-                <p className="unit-city">Maceió · AL</p>
-                <a href="https://maps.app.goo.gl/4PRsv8cXWust6KXk6" target="_blank" rel="noopener noreferrer">Av. Menino Marcelo, 9350<br />Empresarial Humberto Lobo, sala 104<br />Serraria · CEP 57046-000 ↗</a>
-              </div>
-              <div className="unit-card">
-                <div className="unit-photo"><Image src="/assets/fachada-paulo-afonso.webp" alt="Fachada do Empresarial Cliomel, em Paulo Afonso" fill sizes="(max-width: 1050px) 100vw, 25vw" /></div>
-                <p className="unit-city">Paulo Afonso · BA</p>
-                <a href="https://share.google/FfHzEWqiCcEHMclkE" target="_blank" rel="noopener noreferrer">Rua Marechal Floriano Peixoto, 549<br />Empresarial Cliomel, sala 301<br />Centro · CEP 48601-210 ↗</a>
-              </div>
+              {offices.map((office) => (
+                <article className="unit-card" id={`unidade-${office.id}`} key={office.id}>
+                  <div className="unit-photo"><Image src={office.image} alt={office.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 25vw" /></div>
+                  <h3 className="unit-city">{office.city} · {office.state}</h3>
+                  <address>{office.street}<br />{office.building}<br />{office.neighborhood} · CEP {office.postalCode}</address>
+                  <div className="unit-actions">
+                    <a href={office.mapUrl} target="_blank" rel="noopener noreferrer" aria-label={`Como chegar à unidade de ${office.city} (nova aba)`}>Como chegar ↗</a>
+                    <a href={`/agendar?unidade=${office.id}`}>Agendar nesta unidade<span className="sr-only"> de {office.city}</span> ↗</a>
+                  </div>
+                </article>
+              ))}
             </div>
             <div className="contact-row">
               <span>Telefone</span>

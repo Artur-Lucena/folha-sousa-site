@@ -3,39 +3,35 @@ import { BookingForm } from './BookingForm';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
-import { getTodayInMaceio, professionals } from './booking';
+import { getTodayInMaceio, resolveBookingPreferences } from './booking';
 
 export const metadata: Metadata = {
   title: 'Agendar Consulta | Fôlha & Sousa Advogados',
-  description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line com o Fôlha & Sousa Advogados.',
+  description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line, com o Fôlha & Sousa Advogados.',
   alternates: { canonical: '/agendar' },
   openGraph: {
     title: 'Agendar Consulta | Fôlha & Sousa Advogados',
-    description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line.',
+    description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line.',
     images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Agendar Consulta | Fôlha & Sousa Advogados',
-    description: 'Solicite uma consulta jurídica presencial em Maceió ou on-line.',
+    description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line.',
     images: ['https://folhaesousa.adv.br/og.jpg'],
   },
 };
 
 type BookingPageProps = {
-  searchParams: Promise<{ profissional?: string | string[] }>;
+  searchParams: Promise<{
+    profissional?: string | string[];
+    area?: string | string[];
+    unidade?: string | string[];
+  }>;
 };
 
 export default async function BookingPage({ searchParams }: BookingPageProps) {
-  const requestedProfessional = (await searchParams).profissional;
-  const professionalKey = Array.isArray(requestedProfessional) ? requestedProfessional[0] : requestedProfessional;
-  const initialProfessional = professionalKey === 'cosmelia'
-    ? professionals[1]
-    : professionalKey === 'savio'
-      ? professionals[2]
-      : professionalKey === 'rubenicio'
-        ? professionals[3]
-        : professionals[0];
+  const preferences = resolveBookingPreferences(await searchParams);
 
   return (
     <>
@@ -54,7 +50,7 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
             <StaggerItem as="li" hoverLift={false}><span>03</span><div><strong>Continue no WhatsApp</strong><small>A mensagem é preparada sem enviar documentos ou cobrar.</small></div></StaggerItem>
           </Stagger>
         </section>
-        <BookingForm key={initialProfessional} initialProfessional={initialProfessional} minDate={getTodayInMaceio()} />
+        <BookingForm key={JSON.stringify(preferences)} {...preferences} minDate={getTodayInMaceio()} />
         <Reveal className="booking-note">
           <h2>O que acontece depois</h2>
           <ol>

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { buildBookingUrl, getDateError, getTodayInMaceio, validateBooking } from '../app/agendar/booking.ts';
+import { areas, buildBookingUrl, getDateError, getTodayInMaceio, resolveBookingPreferences, validateBooking } from '../app/agendar/booking.ts';
 
 function validData(overrides = {}) {
   const data = new FormData();
@@ -88,4 +88,32 @@ test('novas opções do site atual passam na validação', () => {
 test('consulta com documentos usa o valor correto em sua mensagem', () => {
   const url = new URL(buildBookingUrl(validData({ consulta: 'Consulta com análise documental' }), '2026-09-09'));
   assert.match(url.searchParams.get('text'), /Consulta com análise documental — R\$ 500,00/);
+});
+
+test('links de área e unidade preservam as escolhas na mensagem de agendamento', () => {
+  const preferences = resolveBookingPreferences({ area: 'tributario', unidade: 'paulo-afonso', profissional: 'savio' });
+  const url = new URL(buildBookingUrl(validData({
+    area: preferences.initialArea,
+    formato: preferences.initialFormat,
+    profissional: preferences.initialProfessional,
+  }), '2026-09-09'));
+  const message = url.searchParams.get('text');
+  assert.match(message, /Área: Direito Tributário/);
+  assert.match(message, /Profissional: Domingos Sávio de Sousa/);
+  assert.match(message, /Formato: Presencial em Paulo Afonso/);
+});
+
+test('todas as áreas dos links têm uma opção válida e exclusiva no formulário', () => {
+  const keys = ['civil', 'tributario', 'administrativo', 'empresarial', 'trabalhista', 'previdenciario', 'publico', 'orientacao'];
+  const choices = keys.map((area) => resolveBookingPreferences({ area }).initialArea);
+  assert.equal(new Set(choices).size, areas.length);
+  assert.deepEqual(new Set(choices), new Set(areas));
+});
+
+test('parâmetros ausentes ou não reconhecidos não inventam área, profissional ou unidade', () => {
+  const defaults = { initialArea: '', initialProfessional: 'Primeiro profissional disponível', initialFormat: 'On-line' };
+  assert.deepEqual(resolveBookingPreferences({}), defaults);
+  assert.deepEqual(resolveBookingPreferences({ area: '__proto__', profissional: 'outro', unidade: 'outra' }), defaults);
+  assert.deepEqual(resolveBookingPreferences({ area: [], profissional: [], unidade: [] }), defaults);
+  assert.equal(resolveBookingPreferences({ area: ['civil', 'tributario'] }).initialArea, 'Direito Civil e Direito das Sucessões');
 });

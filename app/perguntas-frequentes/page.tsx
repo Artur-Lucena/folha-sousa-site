@@ -36,7 +36,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   },
   {
     title: 'O atendimento é presencial ou on-line?',
-    paragraphs: ['Os dois. O atendimento presencial ocorre em Maceió/AL, e o on-line alcança todo o território nacional e clientes com interesses fora do país.'],
+    paragraphs: ['Os dois. O atendimento presencial ocorre em Maceió/AL e Paulo Afonso/BA, mediante agendamento prévio. O atendimento on-line alcança todo o território nacional e clientes com interesses fora do país.'],
   },
   {
     title: 'Quais são os dias e horários de atendimento?',

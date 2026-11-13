@@ -79,6 +79,8 @@ Executar 'pnpm build' 'corepack' @('pnpm', 'build')
 Passo "Servidor local (porta $Porta)"
 $estiloJanela = 'Minimized'
 if ($PararAoFinal) { $estiloJanela = 'Hidden' }
+# Só para o teste local: aceita POST sem assinatura (o servidor não tem WHATSAPP_APP_SECRET aqui).
+$env:WHATSAPP_ALLOW_UNSIGNED = 'true'
 $servidor = Start-Process -FilePath 'node_modules\.bin\vinext.cmd' -ArgumentList 'start', '-p', "$Porta", '-H', '127.0.0.1' -PassThru -WindowStyle $estiloJanela
 if (-not $?) { Falhar 'Não foi possível iniciar o servidor.' }
 
@@ -126,19 +128,25 @@ if (-not $okBad) { $falhas++ }
 
 $whOk = Join-Path $env:TEMP 'wh-ok.json'
 $whRuim = Join-Path $env:TEMP 'wh-ruim.json'
+$whStatus = Join-Path $env:TEMP 'wh-status.json'
 [System.IO.File]::WriteAllText($whOk, '{"from":"5582999990000","text":"Agendar consulta"}')
 [System.IO.File]::WriteAllText($whRuim, '{"foo":1}')
+[System.IO.File]::WriteAllText($whStatus, '{"object":"whatsapp_business_account","entry":[{"changes":[{"value":{"statuses":[{"status":"delivered"}]}}]}]}')
 $respOk = curl.exe -s --max-time 10 -X POST -H 'content-type: application/json' --data-binary "@$whOk" "http://127.0.0.1:$Porta/api/whatsapp/webhook"
-$okWebhook = $respOk -eq '{"received":true}'
+$okWebhook = $respOk -eq '{"received":true,"messages":1,"statuses":0}'
 Write-Host ("POST /api/whatsapp/webhook (válido) -> {0} {1}" -f $respOk, $(if ($okWebhook) { 'OK' } else { 'ERRO' }))
 if (-not $okWebhook) { $falhas++ }
 $c422 = curl.exe -s -o NUL -w '%{http_code}' --max-time 10 -X POST -H 'content-type: application/json' --data-binary "@$whRuim" "http://127.0.0.1:$Porta/api/whatsapp/webhook"
 Write-Host ("POST /api/whatsapp/webhook (inválido) -> {0} {1}" -f $c422, $(if ($c422 -eq '422') { 'OK' } else { 'ERRO' }))
 if ($c422 -ne '422') { $falhas++ }
+$respStatus = curl.exe -s --max-time 10 -X POST -H 'content-type: application/json' --data-binary "@$whStatus" "http://127.0.0.1:$Porta/api/whatsapp/webhook"
+$okStatus = $respStatus -eq '{"received":true,"messages":0,"statuses":1}'
+Write-Host ("POST /api/whatsapp/webhook (só status da Meta -> 200) -> {0} {1}" -f $respStatus, $(if ($okStatus) { 'OK' } else { 'ERRO' }))
+if (-not $okStatus) { $falhas++ }
 $c503 = curl.exe -s -o NUL -w '%{http_code}' --max-time 10 "http://127.0.0.1:$Porta/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=x&hub.challenge=1234"
 Write-Host ("GET /api/whatsapp/webhook (sem segredo -> 503) -> {0} {1}" -f $c503, $(if ($c503 -eq '503') { 'OK' } else { 'ERRO' }))
 if ($c503 -ne '503') { $falhas++ }
-Remove-Item -LiteralPath $whOk, $whRuim -ErrorAction SilentlyContinue
+Remove-Item -LiteralPath $whOk, $whRuim, $whStatus -ErrorAction SilentlyContinue
 
 if ($falhas -gt 0) {
   taskkill /PID $servidor.Id /T /F | Out-Null

@@ -12,6 +12,7 @@ export function ClipReveal({ children, className }: { children: React.ReactNode;
   return (
     <motion.div
       className={className}
+      data-reveal=""
       initial={{ clipPath: 'inset(8% 6% 8% 6%)', opacity: 0.4 }}
       whileInView={{ clipPath: 'inset(0% 0% 0% 0%)', opacity: 1 }}
       viewport={{ once: true, margin: '-64px' }}

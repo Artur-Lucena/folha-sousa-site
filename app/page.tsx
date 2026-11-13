@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import type { CSSProperties } from 'react';
 import { ArrowLink } from './components/ArrowLink';
 import { ClipReveal } from './components/ClipReveal';
 import { Footer } from './components/Footer';
@@ -122,25 +123,21 @@ export default function Home() {
         />
         <section className="hero" id="inicio">
           <div className="hero-copy">
-            <Reveal as="p" className="eyebrow" delay={0}>Advocacia estratégica · Maceió e todo o Brasil</Reveal>
+            <p className="eyebrow hero-enter">Advocacia estratégica · Maceió e todo o Brasil</p>
             <HeroTitle text="Precisa de orientação jurídica segura?" />
-            <Reveal as="p" className="hero-lead" delay={0.16}>
+            <p className="hero-lead hero-enter" style={{ '--enter-delay': '.16s' } as CSSProperties}>
               Técnica, experiência e atendimento próximo para proteger pessoas,
               patrimônios e negócios com segurança.
-            </Reveal>
-            <Reveal delay={0.24}>
-              <div className="hero-actions">
-                <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
-                <a className="text-link" href="#atuacao">Conheça nossa atuação <span aria-hidden="true">↘</span></a>
-              </div>
-            </Reveal>
-            <Reveal delay={0.32}>
-              <div className="hero-proof" aria-label="Diferenciais">
-                <span>Atendimento nacional e internacional</span>
-                <span>Presencial e on-line</span>
-                <span>Maceió · Paulo Afonso</span>
-              </div>
-            </Reveal>
+            </p>
+            <div className="hero-actions hero-enter" style={{ '--enter-delay': '.24s' } as CSSProperties}>
+              <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
+              <a className="text-link" href="#atuacao">Conheça nossa atuação <span aria-hidden="true">↘</span></a>
+            </div>
+            <ul className="hero-proof hero-enter" aria-label="Diferenciais" style={{ '--enter-delay': '.32s' } as CSSProperties}>
+              <li>Atendimento nacional e internacional</li>
+              <li>Presencial e on-line</li>
+              <li>Maceió · Paulo Afonso</li>
+            </ul>
           </div>
 
           <HeroVisual />

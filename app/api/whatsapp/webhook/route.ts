@@ -1,5 +1,6 @@
 import { verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
-import { verifyMetaSignature } from './signature';
+import { readMetaNotification } from './payload';
+import { authorizeWebhookPost } from './signature';
 
 export const dynamic = 'force-dynamic';
 
@@ -7,8 +8,10 @@ export const dynamic = 'force-dynamic';
  * Webhook do futuro chatbot de WhatsApp (Meta Cloud API).
  *
  * - GET: verificação do webhook (`hub.mode`, `hub.verify_token`, `hub.challenge`).
- * - POST: recepção de mensagens. Nesta fase apenas valida o formato e
- *   confirma o recebimento, sem armazenar dados nem chamar a Cloud API.
+ * - POST: recepção de notificações. Exige a assinatura da Meta
+ *   (`WHATSAPP_APP_SECRET`); só aceita POST sem assinatura com
+ *   `WHATSAPP_ALLOW_UNSIGNED=true` (testes locais). Nesta fase apenas valida
+ *   o formato e confirma o recebimento, sem armazenar dados nem chamar a Cloud API.
  *
  * Nenhum segredo é lido do código: tudo vem de variáveis de ambiente.
  * Ver `docs/WHATSAPP-CHATBOT.md` e `.env.example`.
@@ -37,15 +40,14 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   const raw = await request.text();
-  if (!raw) {
-    return Response.json({ ok: false, reason: 'corpo JSON inválido' }, { status: 400 });
-  }
 
-  // Quando o segredo do app está configurado, a assinatura da Meta passa
-  // a ser obrigatória. Sem segredo, mantém o comportamento de teste inicial.
-  const appSecret = process.env.WHATSAPP_APP_SECRET;
-  if (appSecret && !verifyMetaSignature(raw, request.headers.get('x-hub-signature-256'), appSecret)) {
-    return Response.json({ ok: false, reason: 'assinatura inválida' }, { status: 403 });
+  // Assinatura antes de qualquer interpretação do corpo (falha fechada).
+  const authorization = authorizeWebhookPost(raw, request.headers.get('x-hub-signature-256'), {
+    appSecret: process.env.WHATSAPP_APP_SECRET,
+    allowUnsigned: process.env.WHATSAPP_ALLOW_UNSIGNED,
+  });
+  if (!authorization.ok) {
+    return Response.json({ ok: false, reason: authorization.reason }, { status: authorization.status });
   }
 
   let body: unknown = null;
@@ -55,27 +57,17 @@ export async function POST(request: Request) {
     return Response.json({ ok: false, reason: 'corpo JSON inválido' }, { status: 400 });
   }
 
-  // Aceita tanto o envelope simplificado { from, text } quanto o
-  // envelope Meta (entry[].changes[].value.messages[]) para facilitar
-  // o teste inicial. Nenhum dado é persistido nesta fase.
-  if (!parseIncomingText(body) && !extractMetaText(body)) {
-    return Response.json({ ok: false, reason: 'mensagem não reconhecida' }, { status: 422 });
+  // Envelope Meta: confirma toda notificação (mensagens e status) com 200.
+  // Nenhum dado é persistido nesta fase.
+  const notification = readMetaNotification(body);
+  if (notification) {
+    return Response.json({ received: true, messages: notification.messages.length, statuses: notification.statuses });
   }
 
-  return Response.json({ received: true }, { status: 200 });
-}
+  // Envelope simplificado { from, text }, para testes locais com `curl`.
+  if (parseIncomingText(body)) {
+    return Response.json({ received: true, messages: 1, statuses: 0 });
+  }
 
-function extractMetaText(body: unknown): { from: string; text: string } | null {
-  if (typeof body !== 'object' || body === null) return null;
-  const entry = (body as { entry?: unknown }).entry;
-  if (!Array.isArray(entry) || entry.length === 0) return null;
-  const changes = (entry[0] as { changes?: unknown }).changes;
-  if (!Array.isArray(changes) || changes.length === 0) return null;
-  const messages = (changes[0] as { value?: { messages?: unknown } }).value?.messages;
-  if (!Array.isArray(messages) || messages.length === 0) return null;
-  const first = messages[0] as { from?: unknown; text?: { body?: unknown } };
-  if (typeof first.from !== 'string') return null;
-  const text = first.text?.body;
-  if (typeof text !== 'string' || !text.trim()) return null;
-  return { from: first.from, text: text.trim() };
+  return Response.json({ ok: false, reason: 'mensagem não reconhecida' }, { status: 422 });
 }

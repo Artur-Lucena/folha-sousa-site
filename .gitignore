@@ -38,3 +38,7 @@ next-env.d.ts
 *.tsbuildinfo
 /outputs/
 /work/
+
+# este projeto usa pnpm (ver packageManager no package.json)
+package-lock.json
+yarn.lock

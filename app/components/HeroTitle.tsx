@@ -1,34 +1,27 @@
-'use client';
-
-import { motion, type Variants } from 'motion/react';
-import { LUX_EASE } from './motion-shared';
-
-const container: Variants = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
-};
-
-const word: Variants = {
-  hidden: { y: '110%' },
-  show: { y: '0%', transition: { duration: 1, ease: LUX_EASE } },
-};
+import { Fragment, type CSSProperties } from 'react';
 
 /**
  * Título do hero com revelação palavra por palavra (máscara editorial).
- * O texto integral vai ao `aria-label`; as máscaras são decorativas.
+ *
+ * A animação é feita só em CSS (`.hero-word`, em `globals.css`): o título
+ * já vem no HTML do servidor e anima no primeiro paint, sem esperar a
+ * hidratação nem depender de JavaScript. O texto integral vai ao
+ * `aria-label`; as máscaras são decorativas.
  */
 export function HeroTitle({ text }: { text: string }) {
   const words = text.split(' ');
   return (
-    <motion.h1 initial="hidden" animate="show" variants={container} aria-label={text}>
+    <h1 aria-label={text}>
       {words.map((w, i) => (
-        <span key={`${w}-${i}`} aria-hidden="true" style={{ display: 'inline-block', overflow: 'hidden', verticalAlign: 'top' }}>
-          <motion.span style={{ display: 'inline-block' }} variants={word}>
-            {w}
-          </motion.span>
-          {i < words.length - 1 ? ' ' : ''}
-        </span>
+        // O espaço fica fora da máscara `inline-block`; dentro dela ele é
+        // descartado no fim da caixa e as palavras aparecem coladas.
+        <Fragment key={`${w}-${i}`}>
+          <span className="hero-word" aria-hidden="true" style={{ '--i': i } as CSSProperties}>
+            <span>{w}</span>
+          </span>
+          {i < words.length - 1 ? ' ' : null}
+        </Fragment>
       ))}
-    </motion.h1>
+    </h1>
   );
 }

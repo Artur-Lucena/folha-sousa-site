@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import { MotionProvider } from './components/MotionProvider';
 import './globals.css';
 
+const NO_JS_REVEAL_STYLE =
+  '<style>[data-reveal]{opacity:1!important;transform:none!important;clip-path:none!important}</style>';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://folhaesousa.adv.br'),
   title: 'Fôlha & Sousa Advogados | Advocacia Estratégica',
@@ -28,6 +31,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
+      <head>
+        {/* Sem JavaScript, os reveals do Motion ficariam presos no estado inicial (invisível). */}
+        <noscript dangerouslySetInnerHTML={{ __html: NO_JS_REVEAL_STYLE }} />
+      </head>
       <body><MotionProvider>{children}</MotionProvider></body>
     </html>
   );

@@ -23,7 +23,8 @@ Ver `.env.example`:
 - `WHATSAPP_VERIFY_TOKEN` — string aleatória criada pelo escritório, usada na verificação do webhook.
 - `WHATSAPP_ACCESS_TOKEN` — token do app Meta (curta/longa duração ou token de sistema).
 - `WHATSAPP_PHONE_NUMBER_ID` — ID do número na Cloud API.
-- `WHATSAPP_APP_SECRET` — (opcional nesta fase) para validar assinatura `X-Hub-Signature-256`.
+- `WHATSAPP_APP_SECRET` — obrigatório para receber POST: valida a assinatura `X-Hub-Signature-256`. Sem ele, o webhook responde 503.
+- `WHATSAPP_ALLOW_UNSIGNED` — `true` somente em testes locais, para aceitar POST sem assinatura quando não há segredo. Nunca em produção.
 
 ## Passo a passo (Meta)
 
@@ -40,7 +41,7 @@ Ver `.env.example`:
 curl -i "http://localhost:3000/api/whatsapp/webhook?hub.mode=subscribe&hub.verify_token=SEU_TOKEN&hub.challenge=1234"
 ```
 
-6. Testar a recepção simplificada:
+6. Testar a recepção simplificada (local, com `WHATSAPP_ALLOW_UNSIGNED=true` e sem `WHATSAPP_APP_SECRET`):
 
 ```bash
 curl -i -X POST http://localhost:3000/api/whatsapp/webhook \
@@ -48,7 +49,7 @@ curl -i -X POST http://localhost:3000/api/whatsapp/webhook \
   -d '{"from":"5582999990000","text":"Agendar consulta"}'
 ```
 
-Resposta esperada nesta fase: `{"received":true}`.
+Resposta esperada nesta fase: `{"received":true,"messages":1,"statuses":0}`. Notificações da Meta só com `statuses` (entregue, lida) também recebem 200, para a Meta não reenviar nem desativar o webhook.
 
 ## Regras do escritório (LGPD e sigilo)
 
@@ -60,7 +61,9 @@ Resposta esperada nesta fase: `{"received":true}`.
 
 ## Pronto nesta fase (2026-09-28)
 
-- Validação de `X-Hub-Signature-256` com `WHATSAPP_APP_SECRET` (obrigatória quando o segredo está configurado; `verifyMetaSignature` em `app/lib/whatsapp.ts`).
+- Validação de `X-Hub-Signature-256` com `WHATSAPP_APP_SECRET`, obrigatória e com falha fechada (`authorizeWebhookPost` em `app/api/whatsapp/webhook/signature.ts`).
+- Leitura do envelope Meta completo, com todas as mensagens de texto e contagem de status (`readMetaNotification` em `app/api/whatsapp/webhook/payload.ts`).
+- Comparação do verify token em tempo constante (`constantTimeEqual`).
 - Horário comercial em `isBusinessHours` (seg–sex, 9h–18h, Maceió) e mensagem fora de horário a partir de `CHATBOT_MENU.businessHours`.
 - Montador de botões interativos `buildInteractiveButtons` no contrato da Cloud API (máx. 3, títulos de 20 caracteres).
 - Testes de contrato em `tests/whatsapp.test.mjs` (assinatura, horário, botões).

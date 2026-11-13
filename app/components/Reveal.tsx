@@ -34,6 +34,8 @@ type RevealProps = {
 /**
  * Revelação sob scroll (substitui o `animation-timeline` do CSS, com
  * suporte universal via IntersectionObserver e `once` por padrão).
+ * `data-reveal` permite ao `<noscript>` do layout mostrar o conteúdo
+ * quando o JavaScript está desativado.
  */
 export function Reveal({ children, as = 'div', id, className, label, delay = 0, y = 28, once = true }: RevealProps) {
   const Tag = revealTags[as] as typeof motion.div;
@@ -42,6 +44,7 @@ export function Reveal({ children, as = 'div', id, className, label, delay = 0, 
       id={id}
       className={className}
       aria-label={label}
+      data-reveal=""
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once, margin: '-64px' }}
@@ -62,13 +65,17 @@ const itemVariants: Variants = {
   show: { opacity: 1, y: 0, transition: { duration: REVEAL_DURATION, ease: LUX_EASE } },
 };
 
-/** Contêiner que escalona a entrada dos `StaggerItem` filhos. */
+/**
+ * Contêiner que escalona a entrada dos `StaggerItem` filhos.
+ * `label` só deve ser usado com elementos que aceitam nome (ex.: `ol`).
+ */
 export function Stagger({ children, as = 'div', className, label }: { children: React.ReactNode; as?: RevealTag; className?: string; label?: string }) {
   const Tag = revealTags[as] as typeof motion.div;
   return (
     <Tag
       className={className}
       aria-label={label}
+      data-reveal=""
       variants={groupVariants}
       initial="hidden"
       whileInView="show"
@@ -87,7 +94,7 @@ export function Stagger({ children, as = 'div', className, label }: { children: 
 export function StaggerItem({ children, as = 'div', className, hoverLift = true }: { children: React.ReactNode; as?: RevealTag; className?: string; hoverLift?: boolean }) {
   const Tag = revealTags[as] as typeof motion.div;
   return (
-    <Tag className={className} variants={itemVariants} whileHover={hoverLift ? { y: -5 } : undefined}>
+    <Tag className={className} data-reveal="" variants={itemVariants} whileHover={hoverLift ? { y: -5 } : undefined}>
       {children}
     </Tag>
   );

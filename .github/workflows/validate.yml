@@ -35,5 +35,26 @@ jobs:
       - name: Verificar tipos
         run: pnpm typecheck
 
-      - name: Verificar regras de agendamento
+      - name: Testes unitários (agendamento, WhatsApp, webhook, dados do site)
         run: pnpm test
+
+      - name: Instalar navegador dos testes E2E
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Testes E2E e acessibilidade (desktop e celular)
+        run: pnpm e2e
+
+      - name: Lighthouse (acessibilidade e SEO bloqueiam; desempenho avisa)
+        run: npx --yes @lhci/cli@0.15.1 autorun
+
+      - name: Guardar relatórios
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-de-teste
+          path: |
+            playwright-report/
+            test-results/
+            .lighthouseci/relatorios/
+          if-no-files-found: ignore
+          retention-days: 14

@@ -42,3 +42,9 @@ next-env.d.ts
 # este projeto usa pnpm (ver packageManager no package.json)
 package-lock.json
 yarn.lock
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/.lighthouseci/

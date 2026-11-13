@@ -25,6 +25,8 @@
   --paper-light: #f8f4ec;
   --gold: #ad8652;
   --gold-light: #d2b178;
+  /* Dourado para texto pequeno em fundos claros: ≥ 5:1 sobre --paper e --paper-light (WCAG AA). */
+  --gold-text: #785a35;
   --muted: #5e5c56;
   --text-body: 1rem;
   --text-label: .875rem;
@@ -50,7 +52,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .skip-link:focus { transform: translateY(0); }
 
 .section-shell { width: min(100%, 1480px); margin-inline: auto; padding-inline: clamp(24px, 6.5vw, 108px); }
-.eyebrow { margin: 0 0 24px; color: #88663b; font-family: var(--sans); font-size: var(--text-small); font-weight: 700; letter-spacing: .18em; line-height: 1.5; text-transform: uppercase; }
+.eyebrow { margin: 0 0 24px; color: var(--gold-text); font-family: var(--sans); font-size: var(--text-small); font-weight: 700; letter-spacing: .18em; line-height: 1.5; text-transform: uppercase; }
 .button { display: inline-flex; gap: 10px; max-width: 100%; text-align: center; align-items: center; justify-content: center; min-height: 52px; padding: 14px 24px; border: 0; border-radius: var(--radius); cursor: pointer; font-family: var(--sans); font-size: var(--text-label); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; transition: background-color .8s var(--ease-luxury), color .8s var(--ease-luxury); }
 .button-gold { color: #18231f; background: var(--gold-light); }
 .button-gold:hover { background: #e5d2b0; }
@@ -245,7 +247,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .booking-note strong { color: var(--ink-soft); }
 .booking-form-help { margin: 0; padding: 20px 0 20px 72px; color: var(--muted); border-bottom: 1px solid var(--line); font: var(--text-label)/1.6 var(--sans); }
 .form-section { min-width: 0; margin: 0; display: grid; grid-template-columns: 40px minmax(0,1fr); gap: 32px; padding: 40px 0; border: 0; border-bottom: 1px solid var(--line); }
-.form-number { padding-top: 8px; color: #785a35; font: 1rem var(--serif); }
+.form-number { padding-top: 8px; color: var(--gold-text); font: 1rem var(--serif); }
 .form-section h2 { margin: 0 0 28px; font: 400 clamp(1.75rem,3vw,2.5rem)/1.15 var(--serif); letter-spacing: -.025em; }
 .field-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; }
 .field-full { grid-column: 1 / -1; }
@@ -284,8 +286,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .legal-hero > p:last-child { margin: 28px 0 0; color: rgba(255,255,255,.55); font-size: var(--text-small); letter-spacing: .1em; text-transform: uppercase; }
 .legal-layout { width: min(100% - 48px,1260px); display: grid; grid-template-columns: minmax(160px,240px) minmax(0,820px); gap: clamp(32px,5vw,80px); margin: 0 auto; padding: 90px 0 125px; }
 .legal-layout aside { position: sticky; top: 120px; align-self: start; display: flex; flex-direction: column; gap: 12px; }
+/* O rótulo reaproveita .footer-label, mas aqui o fundo é claro: dourado escuro para contraste AA. */
+.legal-layout aside .footer-label { color: var(--gold-text); }
 .legal-layout aside a { color: var(--muted); font-size: var(--text-small); line-height: 1.45; }
-.legal-layout aside a:hover { color: #785a35; }
+.legal-layout aside a:hover { color: var(--gold-text); }
 .legal-intro { margin: 0 0 60px; padding-bottom: 46px; border-bottom: 1px solid var(--line); font: 25px/1.55 var(--serif); color: var(--ink-soft); }
 .legal-layout article section { margin-bottom: 54px; scroll-margin-top: 120px; }
 .legal-layout h2 { margin: 0 0 18px; font: 400 34px var(--serif); letter-spacing: -.025em; }
@@ -297,7 +301,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .faq-item { border-bottom: 1px solid var(--line); }
 .faq-item:first-child { border-top: 1px solid var(--line); }
 .faq-question { width: 100%; min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 4px; background: none; border: 0; cursor: pointer; text-align: left; font: 400 24px/1.3 var(--serif); letter-spacing: -.02em; color: var(--ink); }
-.faq-icon { flex: none; display: grid; width: 34px; height: 34px; place-items: center; color: #785a35; border: 1px solid #a88b62; border-radius: 50%; font-size: 20px; line-height: 1; }
+.faq-icon { flex: none; display: grid; width: 34px; height: 34px; place-items: center; color: var(--gold-text); border: 1px solid #a88b62; border-radius: 50%; font-size: 20px; line-height: 1; }
 .faq-answer { padding: 0 4px 28px; }
 .faq-answer p { margin: 0 0 14px; color: var(--muted); font-size: var(--text-body); line-height: 1.8; }
 .faq-answer p:last-child { margin-bottom: 0; }
@@ -326,7 +330,7 @@ main h1, main h2, main h3 { overflow-wrap: anywhere; }
   .mobile-menu { position: relative; display: block; order: 3; }
   .mobile-menu summary { min-height: 44px; display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-size: var(--text-label); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
   .mobile-menu summary::-webkit-details-marker { display: none; }
-  .mobile-menu-icon { color: #88663b; font-size: 17px; font-weight: 400; line-height: 1; transition: transform .35s var(--ease-luxury); }
+  .mobile-menu-icon { color: var(--gold-text); font-size: 17px; font-weight: 400; line-height: 1; transition: transform .35s var(--ease-luxury); }
   .mobile-menu[open] .mobile-menu-icon { transform: rotate(45deg); }
   .mobile-menu nav { position: absolute; top: 46px; right: 0; width: 246px; display: flex; flex-direction: column; padding: 12px 16px; background: var(--paper-light); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 20px 40px rgba(28,29,27,.13); }
   .mobile-menu nav a { min-height: 46px; display: flex; align-items: center; padding: 0 8px; border-bottom: 1px solid var(--line); font-size: var(--text-label); }

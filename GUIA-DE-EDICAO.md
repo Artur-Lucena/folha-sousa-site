@@ -39,6 +39,10 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `tests/booking.test.mjs`: testes das regras de agendamento, sem enviar mensagens.
 - `tests/whatsapp.test.mjs`: testes dos links e da verificação do webhook, sem segredos.
 - `tests/site.test.mjs`: testes dos dados institucionais e dos metadados.
+- `tests/webhook-route.test.mjs`: testes das respostas reais do webhook (GET e POST).
+- `e2e/site.spec.ts`: testes de ponta a ponta e acessibilidade (Playwright + axe).
+- `lighthouserc.json`: metas do Lighthouse no CI.
+- `testar-local.ps1` / `testar-local.sh`: validação local completa no Windows / Linux.
 - `app/politicas-de-privacidade/`: política de privacidade.
 - `app/perguntas-frequentes/`: perguntas frequentes com dados estruturados FAQ.
 - `app/termo-de-consulta-juridica/`: termo da consulta.

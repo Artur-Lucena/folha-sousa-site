@@ -1,4 +1,4 @@
-# testar-local.ps1 — Valida e serve o site Fôlha & Sousa localmente.
+﻿# testar-local.ps1 — Valida e serve o site Fôlha & Sousa localmente.
 #
 # O que faz, nesta ordem:
 #   1. confere Node.js 22+ e pnpm;

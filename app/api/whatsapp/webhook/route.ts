@@ -1,6 +1,6 @@
-import { verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp';
-import { readMetaNotification } from './payload';
-import { authorizeWebhookPost } from './signature';
+import { verifyWebhookChallenge, parseIncomingText } from '../../../lib/whatsapp.ts';
+import { readMetaNotification } from './payload.ts';
+import { authorizeWebhookPost } from './signature.ts';
 
 export const dynamic = 'force-dynamic';
 

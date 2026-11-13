@@ -1,6 +1,13 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
+import { SITE_NAME } from './lib/site';
+
+export const metadata: Metadata = {
+  title: `Página não encontrada | ${SITE_NAME}`,
+  robots: { index: false, follow: true },
+};
 
 export default function NotFound() {
   return (

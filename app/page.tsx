@@ -264,7 +264,7 @@ export default function Home() {
         </section>
 
         <section className="reach-section">
-          <Image className="reach-map" src="/assets/world-map.png" alt="" aria-hidden="true" width={1600} height={900} sizes="(max-width: 720px) 150vw, 72vw" />
+          <Image className="reach-map" src="/assets/world-map.png" alt="" aria-hidden="true" width={740} height={479} sizes="(max-width: 720px) 150vw, 72vw" />
           <Reveal className="reach-copy section-shell">
             <p className="eyebrow">Atendimento sem fronteiras</p>
             <h2>Nacional e internacional.</h2>

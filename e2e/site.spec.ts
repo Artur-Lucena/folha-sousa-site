@@ -171,3 +171,46 @@ test.describe('perguntas frequentes', () => {
     expect(data.mainEntity.length).toBeGreaterThan(5);
   });
 });
+
+test.describe('segurança e ícones', () => {
+  for (const route of ['/', ...ROUTES.slice(1), '/pagina-que-nao-existe', '/robots.txt']) {
+    test(`cabeçalhos de segurança em ${route}`, async ({ request }) => {
+      const response = await request.get(route);
+      const headers = response.headers();
+      expect(headers['x-frame-options']).toBe('DENY');
+      expect(headers['x-content-type-options']).toBe('nosniff');
+      expect(headers['referrer-policy']).toBe('strict-origin-when-cross-origin');
+      expect(headers['strict-transport-security']).toBe('max-age=31536000');
+      expect(headers['content-security-policy']).toContain("frame-ancestors 'none'");
+      expect(headers['content-security-policy']).toContain("object-src 'none'");
+    });
+  }
+
+  test('nenhuma violação de CSP ao navegar e agendar', async ({ page }) => {
+    const violations: string[] = [];
+    page.on('console', (message) => {
+      if (/Content Security Policy|Refused to/i.test(message.text())) violations.push(message.text());
+    });
+    for (const route of ROUTES) {
+      await page.goto(route);
+      await revealAll(page);
+    }
+    await page.goto('/perguntas-frequentes');
+    await page.locator('#faq-button-2').click();
+    expect(violations).toEqual([]);
+  });
+
+  test('ícones e manifest publicados', async ({ page, request }) => {
+    await page.goto('/');
+    const icon = await page.locator('link[rel="icon"]').getAttribute('href');
+    const apple = await page.locator('link[rel="apple-touch-icon"]').getAttribute('href');
+    expect(icon).toMatch(/^\/icon\.svg/);
+    expect(apple).toMatch(/^\/apple-icon\.png/);
+    for (const url of [icon!, apple!, '/icons/icon-192.png', '/icons/icon-512.png']) {
+      expect((await request.get(url)).status()).toBe(200);
+    }
+    const manifest = await (await request.get('/manifest.webmanifest')).json();
+    expect(manifest.name).toBe('Fôlha & Sousa Advogados');
+    expect(manifest.icons.map((i: { sizes: string }) => i.sizes)).toEqual(['192x192', '512x512', 'any']);
+  });
+});

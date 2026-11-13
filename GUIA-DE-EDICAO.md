@@ -42,6 +42,8 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `tests/webhook-route.test.mjs`: testes das respostas reais do webhook (GET e POST).
 - `e2e/site.spec.ts`: testes de ponta a ponta e acessibilidade (Playwright + axe).
 - `lighthouserc.json`: metas do Lighthouse no CI.
+- `app/lib/security-headers.ts` e `next.config.ts`: cabeçalhos de segurança (CSP, HSTS, anti-iframe). Ao incluir qualquer serviço externo (mapa embutido, analytics, fonte remota), libere a origem na CSP.
+- `app/icon.svg`, `app/apple-icon.png`, `app/manifest.ts` e `public/icons/`: ícones do site. Os PNG são gerados a partir do `icon.svg`.
 - `testar-local.ps1` / `testar-local.sh`: validação local completa no Windows / Linux.
 - `app/politicas-de-privacidade/`: política de privacidade.
 - `app/perguntas-frequentes/`: perguntas frequentes com dados estruturados FAQ.

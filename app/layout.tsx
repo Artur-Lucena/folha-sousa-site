@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   authors: [{ name: SITE_NAME }],
   robots: { index: true, follow: true },
-  icons: { icon: '/assets/favicon.jpg' },
   openGraph: {
     title: SITE_NAME,
     description: SITE_TAGLINE,

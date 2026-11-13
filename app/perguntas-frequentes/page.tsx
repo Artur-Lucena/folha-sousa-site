@@ -1,34 +1,21 @@
 import type { Metadata } from 'next';
+import { consultationPrices } from '../agendar/booking';
+import { BUSINESS_HOURS, CONTACT_EMAIL, pageMetadata } from '../lib/site';
+import { WHATSAPP_DISPLAY_NUMBER } from '../lib/whatsapp';
 import { FaqAccordion } from '../components/FaqAccordion';
 
-const OG_IMAGE = {
-  url: 'https://folhaesousa.adv.br/og.jpg',
-  width: 1200,
-  height: 630,
-  alt: 'Fôlha & Sousa Advogados',
-};
 
-export const metadata: Metadata = {
-  title: 'Perguntas Frequentes | Fôlha & Sousa Advogados',
+export const metadata: Metadata = pageMetadata({
+  title: 'Perguntas Frequentes',
   description: 'Valores de consulta, agendamento, atendimento presencial e on-line, reagendamento e proteção de dados.',
-  alternates: { canonical: '/perguntas-frequentes' },
-  openGraph: {
-    title: 'Perguntas Frequentes | Fôlha & Sousa Advogados',
-    description: 'Valores de consulta, agendamento e atendimento do Fôlha & Sousa Advogados.',
-    images: [OG_IMAGE],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Perguntas Frequentes | Fôlha & Sousa Advogados',
-    description: 'Valores de consulta, agendamento e atendimento do Fôlha & Sousa Advogados.',
-    images: [OG_IMAGE.url],
-  },
-};
+  path: '/perguntas-frequentes',
+  socialDescription: 'Valores de consulta, agendamento e atendimento do Fôlha & Sousa Advogados.',
+});
 
 const sections: { title: string; paragraphs: string[] }[] = [
   {
     title: 'Quanto custa a consulta?',
-    paragraphs: ['A consulta sem análise documental tem o valor de R$ 350,00. A consulta com análise documental tem o valor de R$ 500,00. O site não realiza cobrança: a contratação é confirmada pela equipe após verificação de disponibilidade.'],
+    paragraphs: [`A consulta sem análise documental tem o valor de ${consultationPrices['Consulta sem análise documental']}. A consulta com análise documental tem o valor de ${consultationPrices['Consulta com análise documental']}. O site não realiza cobrança: a contratação é confirmada pela equipe após verificação de disponibilidade.`],
   },
   {
     title: 'Como solicito um agendamento?',
@@ -40,7 +27,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   },
   {
     title: 'Quais são os dias e horários de atendimento?',
-    paragraphs: ['Segunda a sexta, das 9h às 18h, no horário de Maceió. A data e o horário indicados na solicitação dependem de confirmação da equipe conforme disponibilidade.'],
+    paragraphs: [`Segunda a sexta, das ${BUSINESS_HOURS.label}, no horário de Maceió. A data e o horário indicados na solicitação dependem de confirmação da equipe conforme disponibilidade.`],
   },
   {
     title: 'A solicitação pelo site já confirma minha consulta?',
@@ -64,7 +51,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   },
   {
     title: 'Como meus dados pessoais são tratados?',
-    paragraphs: ['Conforme a Política de Privacidade e a LGPD: os dados informados servem para contato, triagem inicial e agendamento. Para dúvidas ou solicitações sobre dados pessoais, utilize contato@folhaesousa.adv.br ou (82) 99410-4373.'],
+    paragraphs: [`Conforme a Política de Privacidade e a LGPD: os dados informados servem para contato, triagem inicial e agendamento. Para dúvidas ou solicitações sobre dados pessoais, utilize ${CONTACT_EMAIL} ou ${WHATSAPP_DISPLAY_NUMBER}.`],
   },
   {
     title: 'Vocês atendem em quais cidades?',
@@ -72,7 +59,7 @@ const sections: { title: string; paragraphs: string[] }[] = [
   },
   {
     title: 'Como falo com a equipe antes de agendar?',
-    paragraphs: ['Pelo WhatsApp ou telefone (82) 99410-4373 e pelo e-mail contato@folhaesousa.adv.br, de segunda a sexta, das 9h às 18h.'],
+    paragraphs: [`Pelo WhatsApp ou telefone ${WHATSAPP_DISPLAY_NUMBER} e pelo e-mail ${CONTACT_EMAIL}, de segunda a sexta, das ${BUSINESS_HOURS.label}.`],
   },
 ];
 

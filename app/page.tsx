@@ -10,7 +10,11 @@ import { HeroVisual } from './components/HeroVisual';
 import { Pressable } from './components/Pressable';
 import { Reveal, Stagger, StaggerItem } from './components/Reveal';
 import { WHATSAPP_DISPLAY_NUMBER, WHATSAPP_INTERNATIONAL_NUMBER } from './lib/whatsapp';
-import { offices } from './lib/offices';
+import { headOffice, offices } from './lib/offices';
+import {
+  BUSINESS_HOURS, CONTACT_EMAIL, OG_IMAGE, SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SOCIAL_LINKS,
+  absoluteUrl, pageMetadata,
+} from './lib/site';
 
 const practiceAreas = [
   {
@@ -63,36 +67,40 @@ const practiceAreas = [
   },
 ];
 
-export const metadata: Metadata = {
-  alternates: { canonical: '/' },
-};
+export const metadata: Metadata = pageMetadata({
+  title: null,
+  description: SITE_DESCRIPTION,
+  path: '/',
+  socialDescription: SITE_TAGLINE,
+});
 
 const legalServiceData = {
   '@context': 'https://schema.org',
   '@type': 'LegalService',
-  name: 'Fôlha & Sousa Advogados',
-  url: 'https://folhaesousa.adv.br/',
-  image: 'https://folhaesousa.adv.br/og.jpg',
+  name: SITE_NAME,
+  url: absoluteUrl('/'),
+  image: OG_IMAGE.url,
   telephone: `+${WHATSAPP_INTERNATIONAL_NUMBER}`,
-  email: 'contato@folhaesousa.adv.br',
+  email: CONTACT_EMAIL,
+  sameAs: [SOCIAL_LINKS.instagram, SOCIAL_LINKS.facebook],
   address: {
     '@type': 'PostalAddress',
-    streetAddress: 'Avenida Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 104',
-    addressLocality: 'Maceió',
-    addressRegion: 'AL',
-    postalCode: '57046-000',
+    streetAddress: `${headOffice.street}, ${headOffice.building}, ${headOffice.room}, ${headOffice.neighborhood}`,
+    addressLocality: headOffice.city,
+    addressRegion: headOffice.state,
+    postalCode: headOffice.postalCode,
     addressCountry: 'BR',
   },
   areaServed: ['Brasil', 'Atendimento internacional'],
   knowsAbout: practiceAreas.map((area) => area.title),
   department: offices.map((office) => ({
     '@type': 'LegalService',
-    '@id': `https://folhaesousa.adv.br/#unidade-${office.id}`,
-    name: `Fôlha & Sousa Advogados — ${office.city}`,
+    '@id': absoluteUrl(`/#unidade-${office.id}`),
+    name: `${SITE_NAME} — ${office.city}`,
     telephone: `+${WHATSAPP_INTERNATIONAL_NUMBER}`,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: `${office.street}, ${office.building}, ${office.neighborhood}`,
+      streetAddress: `${office.street}, ${office.building}, ${office.room}, ${office.neighborhood}`,
       addressLocality: office.city,
       addressRegion: office.state,
       postalCode: office.postalCode,
@@ -101,9 +109,9 @@ const legalServiceData = {
   })),
   openingHoursSpecification: [{
     '@type': 'OpeningHoursSpecification',
-    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-    opens: '09:00',
-    closes: '18:00',
+    dayOfWeek: [...BUSINESS_HOURS.dayOfWeek],
+    opens: BUSINESS_HOURS.opens,
+    closes: BUSINESS_HOURS.closes,
   }],
   employee: [
     { '@type': 'Attorney', name: 'Cosmélia Fôlha', jobTitle: 'Sócia · Especialista em Direito de Família' },
@@ -282,7 +290,7 @@ export default function Home() {
                 <article className="unit-card" id={`unidade-${office.id}`} key={office.id}>
                   <div className="unit-photo"><Image src={office.image} alt={office.imageAlt} fill sizes="(max-width: 720px) 100vw, (max-width: 1050px) 50vw, 25vw" /></div>
                   <h3 className="unit-city">{office.city} · {office.state}</h3>
-                  <address>{office.street}<br />{office.building}<br />{office.neighborhood} · CEP {office.postalCode}</address>
+                  <address>{office.street}<br />{office.building}, {office.room}<br />{office.neighborhood} · CEP {office.postalCode}</address>
                   <div className="unit-actions">
                     <a href={office.mapUrl} target="_blank" rel="noopener noreferrer" aria-label={`Como chegar à unidade de ${office.city} (nova aba)`}>Como chegar ↗</a>
                     <a href={`/agendar?unidade=${office.id}`}>Agendar nesta unidade<span className="sr-only"> de {office.city}</span> ↗</a>
@@ -296,11 +304,11 @@ export default function Home() {
             </div>
             <div className="contact-row">
               <span>E-mail</span>
-              <a href="mailto:contato@folhaesousa.adv.br">contato@folhaesousa.adv.br</a>
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
             </div>
             <div className="contact-row">
               <span>Horário</span>
-              <p>9h às 18h, de segunda a sexta-feira<br />Atendimento presencial ou on-line com agendamento prévio.</p>
+              <p>{BUSINESS_HOURS.label}, de segunda a sexta-feira<br />Atendimento presencial ou on-line com agendamento prévio.</p>
             </div>
             <Pressable><a className="button button-gold" href="/agendar">Agendar consulta</a></Pressable>
           </Reveal>

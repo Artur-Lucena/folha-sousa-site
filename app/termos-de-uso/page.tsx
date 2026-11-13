@@ -1,22 +1,13 @@
 import type { Metadata } from 'next';
+import { CONTACT_EMAIL, pageMetadata } from '../lib/site';
+import { WHATSAPP_DISPLAY_NUMBER } from '../lib/whatsapp';
 import { LegalPage, type LegalSection } from '../components/LegalPage';
 
-export const metadata: Metadata = {
-  title: 'Termos de Uso | Fôlha & Sousa Advogados',
+export const metadata: Metadata = pageMetadata({
+  title: 'Termos de Uso',
   description: 'Condições de uso do site Fôlha & Sousa Advogados.',
-  alternates: { canonical: '/termos-de-uso' },
-  openGraph: {
-    title: 'Termos de Uso | Fôlha & Sousa Advogados',
-    description: 'Condições de uso do site Fôlha & Sousa Advogados.',
-    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Termos de Uso | Fôlha & Sousa Advogados',
-    description: 'Condições de uso do site Fôlha & Sousa Advogados.',
-    images: ['https://folhaesousa.adv.br/og.jpg'],
-  },
-};
+  path: '/termos-de-uso',
+});
 
 const sections: LegalSection[] = [
   {
@@ -45,7 +36,7 @@ const sections: LegalSection[] = [
   },
   {
     title: 'Atualizações e contato',
-    paragraphs: ['Estes Termos poderão ser atualizados para refletir alterações legais, técnicas ou operacionais. Para dúvidas, entre em contato pelo e-mail contato@folhaesousa.adv.br ou pelo telefone (82) 99410-4373.'],
+    paragraphs: [`Estes Termos poderão ser atualizados para refletir alterações legais, técnicas ou operacionais. Para dúvidas, entre em contato pelo e-mail ${CONTACT_EMAIL} ou pelo telefone ${WHATSAPP_DISPLAY_NUMBER}.`],
   },
 ];
 

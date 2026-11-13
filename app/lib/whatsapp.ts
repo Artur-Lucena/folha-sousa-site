@@ -35,8 +35,8 @@ export function getDefaultWhatsAppLink(): string {
  * Vocabulário oficial do futuro chatbot.
  * Deve espelhar `app/agendar/booking.ts` (áreas, consultas, formatos,
  * períodos e profissionais) para que site e bot falem a mesma língua.
- * Sem import direto entre os módulos (o runner de testes do Node exige
- * extensão explícita); a paridade é verificada por `tests/whatsapp.test.mjs`.
+ * `booking.ts` importa o número daqui; a paridade do vocabulário é
+ * verificada por `tests/whatsapp.test.mjs`.
  */
 export const CHATBOT_MENU = {
   greeting:

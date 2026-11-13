@@ -1,9 +1,10 @@
 import type { MetadataRoute } from 'next';
+import { SITE_URL, absoluteUrl } from './lib/site';
 
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: { userAgent: '*', allow: '/' },
-    sitemap: 'https://folhaesousa.adv.br/sitemap.xml',
-    host: 'https://folhaesousa.adv.br',
+    sitemap: absoluteUrl('/sitemap.xml'),
+    host: SITE_URL,
   };
 }

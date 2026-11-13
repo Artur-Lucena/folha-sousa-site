@@ -1,22 +1,14 @@
 import type { Metadata } from 'next';
+import { CNPJ, CONTACT_EMAIL, SITE_NAME, pageMetadata } from '../lib/site';
+import { formatOfficeAddress, headOffice } from '../lib/offices';
+import { WHATSAPP_DISPLAY_NUMBER } from '../lib/whatsapp';
 import { LegalPage, type LegalSection } from '../components/LegalPage';
 
-export const metadata: Metadata = {
-  title: 'Política de Privacidade | Fôlha & Sousa Advogados',
+export const metadata: Metadata = pageMetadata({
+  title: 'Política de Privacidade',
   description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
-  alternates: { canonical: '/politicas-de-privacidade' },
-  openGraph: {
-    title: 'Política de Privacidade | Fôlha & Sousa Advogados',
-    description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
-    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Política de Privacidade | Fôlha & Sousa Advogados',
-    description: 'Conheça como o Fôlha & Sousa Advogados trata e protege dados pessoais.',
-    images: ['https://folhaesousa.adv.br/og.jpg'],
-  },
-};
+  path: '/politicas-de-privacidade',
+});
 
 const sections: LegalSection[] = [
   {
@@ -51,7 +43,7 @@ const sections: LegalSection[] = [
   },
   {
     title: 'Contato',
-    paragraphs: ['Para dúvidas ou solicitações relacionadas a dados pessoais, entre em contato pelo e-mail contato@folhaesousa.adv.br ou pelo telefone (82) 99410-4373. Fôlha & Sousa Advogados — CNPJ 28.306.731/0001-89 — Av. Menino Marcelo, 9350, Empresarial Humberto Lobo, sala 104, Serraria, Maceió/AL, CEP 57046-000.'],
+    paragraphs: [`Para dúvidas ou solicitações relacionadas a dados pessoais, entre em contato pelo e-mail ${CONTACT_EMAIL} ou pelo telefone ${WHATSAPP_DISPLAY_NUMBER}. ${SITE_NAME} — CNPJ ${CNPJ} — ${formatOfficeAddress(headOffice)}.`],
   },
 ];
 

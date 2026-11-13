@@ -11,6 +11,13 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 
 ## Onde alterar cada parte
 
+**Dados de contato e institucionais têm uma fonte só — altere ali e o site inteiro acompanha** (páginas, rodapé, textos legais, FAQ, dados estruturados, metadados, sitemap):
+
+- `app/lib/site.ts`: domínio, nome, e-mail, CNPJ, redes sociais, horário, imagem de compartilhamento e o helper `pageMetadata` (título, descrição e canonical de cada página).
+- `app/lib/whatsapp.ts`: telefone/WhatsApp.
+- `app/lib/offices.ts`: endereços, salas, fotos e mapas das unidades (a primeira é a sede).
+- `app/agendar/booking.ts`: valores das consultas (usados também na FAQ e no Termo de Consulta).
+
 - `app/page.tsx`: conteúdo e estrutura da página inicial.
 - `app/globals.css`: cores, tipografia, tamanhos, espaçamentos, animações e responsividade.
 - `app/components/Header.tsx`: cabeçalho e menus.
@@ -31,6 +38,7 @@ Use a pasta compartilhada como projeto principal. O caminho do Linux estará dis
 - `.env.example`: variáveis necessárias no servidor (nunca commitar valores reais).
 - `tests/booking.test.mjs`: testes das regras de agendamento, sem enviar mensagens.
 - `tests/whatsapp.test.mjs`: testes dos links e da verificação do webhook, sem segredos.
+- `tests/site.test.mjs`: testes dos dados institucionais e dos metadados.
 - `app/politicas-de-privacidade/`: política de privacidade.
 - `app/perguntas-frequentes/`: perguntas frequentes com dados estruturados FAQ.
 - `app/termo-de-consulta-juridica/`: termo da consulta.

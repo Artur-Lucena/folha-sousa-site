@@ -5,7 +5,8 @@ export const offices = [
     city: 'Maceió',
     state: 'AL',
     street: 'Av. Menino Marcelo, 9350',
-    building: 'Empresarial Humberto Lobo, sala 104',
+    building: 'Empresarial Humberto Lobo',
+    room: 'sala 104',
     neighborhood: 'Serraria',
     postalCode: '57046-000',
     image: '/assets/fachada-maceio.webp',
@@ -17,7 +18,8 @@ export const offices = [
     city: 'Paulo Afonso',
     state: 'BA',
     street: 'Rua Marechal Floriano Peixoto, 549',
-    building: 'Empresarial Cliomel, sala 301',
+    building: 'Empresarial Cliomel',
+    room: 'sala 301',
     neighborhood: 'Centro',
     postalCode: '48601-210',
     image: '/assets/fachada-paulo-afonso.webp',
@@ -25,3 +27,13 @@ export const offices = [
     mapUrl: 'https://share.google/FfHzEWqiCcEHMclkE',
   },
 ] as const;
+
+export type Office = (typeof offices)[number];
+
+/** Sede (endereço usado no CNPJ e nos textos legais). */
+export const headOffice: Office = offices[0];
+
+/** Endereço completo em uma linha: rua, prédio, sala, bairro, cidade/UF e CEP. */
+export function formatOfficeAddress(office: Office): string {
+  return `${office.street}, ${office.building}, ${office.room}, ${office.neighborhood}, ${office.city}/${office.state}, CEP ${office.postalCode}`;
+}

@@ -1,22 +1,14 @@
 import type { Metadata } from 'next';
+import { consultationPrices } from '../agendar/booking';
+import { CONTACT_EMAIL, pageMetadata } from '../lib/site';
+import { WHATSAPP_DISPLAY_NUMBER } from '../lib/whatsapp';
 import { LegalPage, type LegalSection } from '../components/LegalPage';
 
-export const metadata: Metadata = {
-  title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
+export const metadata: Metadata = pageMetadata({
+  title: 'Termo de Consulta Jurídica',
   description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
-  alternates: { canonical: '/termo-de-consulta-juridica' },
-  openGraph: {
-    title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
-    description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
-    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Termo de Consulta Jurídica | Fôlha & Sousa Advogados',
-    description: 'Condições da consulta jurídica individualizada do Fôlha & Sousa Advogados.',
-    images: ['https://folhaesousa.adv.br/og.jpg'],
-  },
-};
+  path: '/termo-de-consulta-juridica',
+});
 
 const sections: LegalSection[] = [
   {
@@ -29,7 +21,7 @@ const sections: LegalSection[] = [
   },
   {
     title: 'Valor e confirmação',
-    paragraphs: ['A consulta sem análise documental tem o valor de R$ 350,00. A consulta com análise documental tem o valor de R$ 500,00. O envio da solicitação pelo site não confirma automaticamente o atendimento nem realiza cobrança. A contratação será confirmada pela equipe após verificação de disponibilidade e pagamento pelos meios seguros informados nos canais oficiais.'],
+    paragraphs: [`A consulta sem análise documental tem o valor de ${consultationPrices['Consulta sem análise documental']}. A consulta com análise documental tem o valor de ${consultationPrices['Consulta com análise documental']}. O envio da solicitação pelo site não confirma automaticamente o atendimento nem realiza cobrança. A contratação será confirmada pela equipe após verificação de disponibilidade e pagamento pelos meios seguros informados nos canais oficiais.`],
   },
   {
     title: 'Relação contratual limitada',
@@ -53,7 +45,7 @@ const sections: LegalSection[] = [
   },
   {
     title: 'Disposições finais e contato',
-    paragraphs: ['A leitura e o aceite deste Termo são condições para a confirmação da consulta. Dúvidas podem ser encaminhadas a contato@folhaesousa.adv.br ou ao telefone (82) 99410-4373.'],
+    paragraphs: [`A leitura e o aceite deste Termo são condições para a confirmação da consulta. Dúvidas podem ser encaminhadas a ${CONTACT_EMAIL} ou ao telefone ${WHATSAPP_DISPLAY_NUMBER}.`],
   },
 ];
 

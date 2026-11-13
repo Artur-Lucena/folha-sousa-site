@@ -1,26 +1,17 @@
 import type { Metadata } from 'next';
+import { BUSINESS_HOURS, pageMetadata } from '../lib/site';
 import { BookingForm } from './BookingForm';
 import { Footer } from '../components/Footer';
 import { Header } from '../components/Header';
 import { Reveal, Stagger, StaggerItem } from '../components/Reveal';
 import { getTodayInMaceio, resolveBookingPreferences } from './booking';
 
-export const metadata: Metadata = {
-  title: 'Agendar Consulta | Fôlha & Sousa Advogados',
+export const metadata: Metadata = pageMetadata({
+  title: 'Agendar Consulta',
   description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line, com o Fôlha & Sousa Advogados.',
-  alternates: { canonical: '/agendar' },
-  openGraph: {
-    title: 'Agendar Consulta | Fôlha & Sousa Advogados',
-    description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line.',
-    images: [{ url: 'https://folhaesousa.adv.br/og.jpg', width: 1200, height: 630, alt: 'Fôlha & Sousa Advogados' }],
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Agendar Consulta | Fôlha & Sousa Advogados',
-    description: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line.',
-    images: ['https://folhaesousa.adv.br/og.jpg'],
-  },
-};
+  path: '/agendar',
+  socialDescription: 'Solicite uma consulta jurídica presencial em Maceió ou Paulo Afonso, ou on-line.',
+});
 
 type BookingPageProps = {
   searchParams: Promise<{
@@ -42,7 +33,7 @@ export default async function BookingPage({ searchParams }: BookingPageProps) {
             <p className="eyebrow">Atendimento jurídico</p>
             <h1>Solicite sua consulta.</h1>
             <p>Escolha o atendimento e indique sua preferência de horário. Nossa equipe confirma os detalhes pelo WhatsApp.</p>
-            <div className="booking-badges"><span>Presencial ou on-line</span><span>Segunda a sexta · 9h às 18h</span></div>
+            <div className="booking-badges"><span>Presencial ou on-line</span><span>Segunda a sexta · {BUSINESS_HOURS.label}</span></div>
           </Reveal>
           <Stagger as="ol" className="booking-steps" label="Como funciona a solicitação de consulta">
             <StaggerItem as="li" hoverLift={false}><span>01</span><div><strong>Escolha o atendimento</strong><small>Área, formato e profissional de preferência.</small></div></StaggerItem>

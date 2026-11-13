@@ -1,3 +1,5 @@
+import { WHATSAPP_BASE_URL } from '../lib/whatsapp.ts';
+
 export const consultationPrices = {
   'Consulta sem análise documental': 'R$ 350,00',
   'Consulta com análise documental': 'R$ 500,00',
@@ -30,10 +32,9 @@ export function resolveBookingPreferences(query: {
     initialFormat: formats[formatIndex < 0 ? 0 : formatIndex],
   };
 }
-// Mantido igual a WHATSAPP_BASE_URL em app/lib/whatsapp.ts (fonte canônica do número).
-// A igualdade é verificada por tests/whatsapp.test.mjs; sem import direto para
-// que este módulo continue carregável pelo runner de testes do Node.
-export const whatsappUrl = 'https://wa.me/5582994104373';
+// Número oficial vem da central `app/lib/whatsapp.ts`. A extensão `.ts`
+// explícita permite que o runner de testes do Node carregue este módulo.
+export const whatsappUrl = WHATSAPP_BASE_URL;
 
 export type BookingField = 'area' | 'consulta' | 'profissional' | 'formato' | 'data' | 'periodo' | 'nome' | 'telefone' | 'email' | 'consentimento';
 export type BookingErrors = Partial<Record<BookingField, string>>;

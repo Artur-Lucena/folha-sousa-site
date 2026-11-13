@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Fragment } from 'react';
+import { offices } from '../lib/offices';
+import { CONTACT_EMAIL, SITE_NAME, SOCIAL_LINKS } from '../lib/site';
 import { WHATSAPP_BASE_URL, buildWhatsAppLink, WHATSAPP_GENERIC_MESSAGE } from '../lib/whatsapp';
 
 export function Footer() {
@@ -9,7 +12,14 @@ export function Footer() {
         <div className="footer-brand">
           <Image src="/assets/logo-white.webp" alt="Fôlha & Sousa Advogados" width={199} height={50} />
           <p>Soluções jurídicas estratégicas para pessoas e empresas.</p>
-          <p className="footer-address">Maceió · Av. Menino Marcelo, 9350, sala 104<br />Paulo Afonso · R. Marechal Floriano Peixoto, 549, sala 301</p>
+          <p className="footer-address">
+            {offices.map((office, index) => (
+              <Fragment key={office.id}>
+                {index > 0 && <br />}
+                {office.city} · {office.street}, {office.room}
+              </Fragment>
+            ))}
+          </p>
         </div>
         <div>
           <p className="footer-label">Navegue</p>
@@ -27,14 +37,14 @@ export function Footer() {
         </div>
         <div>
           <p className="footer-label">Conecte-se</p>
-          <a href="mailto:contato@folhaesousa.adv.br">contato@folhaesousa.adv.br</a>
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
           <a href={WHATSAPP_BASE_URL} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>
-          <a href="https://www.instagram.com/folhaesousa.adv/" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
-          <a href="https://www.facebook.com/share/1AfALzayzH/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer">Facebook ↗</a>
+          <a href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+          <a href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer">Facebook ↗</a>
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© {new Date().getFullYear()} Fôlha & Sousa Advogados. Todos os direitos reservados.</span>
+        <span>© {new Date().getFullYear()} {SITE_NAME}. Todos os direitos reservados.</span>
         <span>Publicidade de caráter exclusivamente informativo.</span>
       </div>
       <a
